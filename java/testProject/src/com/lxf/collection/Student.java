@@ -10,12 +10,12 @@ import java.util.HashSet;   //引入set集合接口的实现类
 public class Student {
 	public String id;
 	public String name;
-	public Set course;
-	public void Student(String id, String name)
+	public Set<Course> course;
+	public Student(String id, String name)
 	{
 		this.id = id;
 		this.name = name;
-		this.course = new HashSet(); //HashSet是Set接口的一个非常重要的实现类
+		this.course = new HashSet<Course>(); //HashSet是Set接口的一个非常重要的实现类
 	}
 	
 }
