@@ -2,6 +2,7 @@ package com.lxf.collection;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -72,6 +73,42 @@ public class MapTest {
 		}
 	}
 	/**
+	 * 测试删除map中的映射
+	 */
+	public void testRemove()
+	{
+		//创建一个Scanner对象，用来活取输入的学生ID
+		Scanner console = new Scanner(System.in);
+		while(true)
+		{
+			System.out.println("请输入要删除的学生ID:");
+			String ID = console.next();
+			//判断ID是否有对应的学生对象
+			Student st = students.get(ID);
+			if(st == null)
+			{
+				System.out.println("输入的ID " + ID +"不存在！");
+				continue;
+			}
+			students.remove(ID);
+			System.out.println("成功删除学生 " + st.name);
+			break;
+		}
+		
+	}
+	/**
+	 * 通过entrySet方法遍历Map
+	 */
+	public void testEntrySet()
+	{
+		//通过entrySet方法，返回Map中的所有键值对
+		Set <Entry<String,Student>> entrySet = students.entrySet();
+		for (Entry<String, Student> entry : entrySet) {
+			System.out.println("获取键：" + entry.getKey());
+			System.out.println("对应的值为：" + entry.getValue().name);
+		}
+	}
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -79,6 +116,8 @@ public class MapTest {
 		MapTest mt = new MapTest();
 		mt.testPut();
 		mt.testKeySet();
+		mt.testRemove();
+		mt.testEntrySet();
 	}
 
 }
