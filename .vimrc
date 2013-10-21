@@ -192,26 +192,8 @@ set background=dark "配置背景颜色为深色 light为浅色，防止行到�
 ""set background=light "配置背景颜色为深色 light为浅色，防止行到一定宽度后背景变红,位置必须放在最后
 set guifont=Liberation\ Mono\ 10
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""浏览器打开方式
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! ViewInBrowser(name)
-    let file = expand("%:p")
-    exec ":update " . file
-    let l:browsers = {
-        \"cr":"/usr/bin/chromium-browser",
-        \"ff":"/usr/bin/firefox"
-    }
-    let htdocs='E:\\apmxe\\htdocs\\'
-    let strpos = stridx(file, substitute(htdocs, '\\\\', '\', "g"))
-    if strpos == -1
-       exec ":silent !start ". l:browsers[a:name] ." file://" . file
-    else
-        let file=substitute(file, htdocs, "http://127.0.0.1:8090/", "g")
-        let file=substitute(file, '\\', '/', "g")
-        exec ":silent !start ". l:browsers[a:name] file
-    endif
-endfunction
-nmap <f>cr :call ViewInBrowser("cr")<cr>
-nmap <f4>ff :call ViewInBrowser("ff")<cr>
+"插入模式下移动"
+inoremap <c-j> <down>
+inoremap <c-k> <up>
+inoremap <c-l> <right>
+inoremap <c-h> <left>
