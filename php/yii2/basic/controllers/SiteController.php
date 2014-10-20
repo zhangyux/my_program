@@ -93,6 +93,7 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+    //liangxifeng add 2014-10-20
     public function actionSay($message = 'Hello')
     {
         return $this->render('say', ['message' => $message]);
