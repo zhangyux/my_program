@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use app\models\EntryForm;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
@@ -93,9 +94,33 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
     //liangxifeng add 2014-10-20
+    
+    //输出view实例
     public function actionSay($message = 'Hello')
     {
         return $this->render('say', ['message' => $message]);
+    }
+
+    //验证用户输入的表单数据
+    public function actionEntry()
+    {
+        $model = new EntryForm;
+        if ($model->load(Yii::$app->request->post())  &&  $model->validate()) 
+        {
+            // valid data received in $model
+
+            // do something meaningful here about $model ...
+
+            return $this->render('entry-confirm', ['model' => $model]);
+                                
+        } else 
+        {
+            // either the page is initially displayed or there is some validation error
+            return $this->render('entry', ['model' => $model]);
+            //return $this->render('entry');
+
+        }
     }
 }
