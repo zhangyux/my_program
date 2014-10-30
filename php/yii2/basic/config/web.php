@@ -9,10 +9,10 @@ $config = [
     'components' => [
         'request' => [
             //liangxifeng 2014-10-20
-            'enableCookieValidation' => false,
-            'enableCsrfValidation' => false,
+            'enableCookieValidation' => true,
+            'enableCsrfValidation' => true,
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'xxxx',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
