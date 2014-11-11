@@ -43,6 +43,15 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
     ],
     'params' => $params,
+
+    //liangxifeng 2014-11-11
+    'defaultRoute'=>'site',
+    'controllerMap'=>[
+        'postComment' => [
+            'class'=>'app\controllers\dir1\PostCommentController',
+            'enableCsrfValidation' => false,
+        ]
+    ]
 ];
 
 if (YII_ENV_DEV) {
