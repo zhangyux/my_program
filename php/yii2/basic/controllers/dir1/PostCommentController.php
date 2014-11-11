@@ -7,6 +7,14 @@ class PostCommentController extends Controller
 {
     public function actionIndex()
     {
-        echo 'this is a test controller!';
+         //察看数据库连接
+         $db = \Yii::$app->db;
+         var_dump($db);
+         echo '<br>';
+         //查看缓存
+         $cache = \Yii::$app->cache;
+         var_dump($cache);exit;
+         echo '<br>this is a test controller!';
+
     }
 }
