@@ -107,6 +107,9 @@ class SiteController extends Controller
     public function actionEntry()
     {
         $model = new EntryForm;
+        //获取表单中lable标签值
+        //$model->getAttributeLabel('name');
+        $model->name="test";
         if ($model->load(Yii::$app->request->post())  &&  $model->validate()) 
         {
             // valid data received in $model
