@@ -14,4 +14,12 @@ class EntryForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'name' =>  'newname',
+            'email' => \Yii::t('app', 'email地址'),
+            ];
+    }
+
 }
