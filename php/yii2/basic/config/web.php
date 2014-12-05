@@ -6,6 +6,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'zh-CN', //错误提示语言
     'components' => [
         'request' => [
             //liangxifeng 2014-10-20
@@ -51,7 +52,13 @@ $config = [
             'class'=>'app\controllers\dir1\PostCommentController',
             'enableCsrfValidation' => false,
         ]
-    ]
+    ],
+    //模块测试
+    'modules' => [
+        'forum' => [
+            'class' => 'app\modules\forum\Module',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {

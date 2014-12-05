@@ -17,16 +17,17 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode('我是嵌套布局中的子布局页面') ?></title>
     <?php $this->head() ?>
 </head>
 <body>
 
 <?php $this->beginBody() ?>
-    <div class="wrap">
+    <div class="a">
+        <h2>我是嵌套布局中的子布局页面</h2>
         <?php
             NavBar::begin([
-                'brandLabel' => 'yii2学习测试头部',
+                'brandLabel' => '嵌套布局中的子布局页面',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -48,21 +49,7 @@ AppAsset::register($this);
             NavBar::end();
         ?>
 
-        <div class="container">
-            <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-            <?= $content ?>
-        </div>
     </div>
-
-    <footer class="footer">
-        <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-            <p class="pull-right"><?= Yii::powered() ?></p>
-        </div>
-    </footer>
-
 <?php $this->endBody() ?>
 </body>
 </html>
