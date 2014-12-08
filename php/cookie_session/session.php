@@ -25,5 +25,23 @@ session_start();
 */
 
 
+$_SESSION['web'] = '我的网站';
+$_SESSION['web_url'] = 'http://www.ljlj.cc';
+//以下两种方式是把session文件中存放的信息删除，而文件依然还存在
+//unset($_SESSION['web']); //单独删除session中一条记录，相当与把lanage变量信息从/tmp/sess_8c8sr01vhi9rjgp99u9lgqpt95文件中删除掉
+//$_SESSION = array();     //把session中所有数据删除掉,清空文件/tmp/sess_8c8sr01vhi9rjgp99u9lgqpt95的内容
+
+/*
+ * 卸载session顺序
+//session_unset(); //根据session_id,/删除session_start放在内存中的session数据
+//会删除/tmp/sess_8c8sr01vhi9rjgp99u9lgqpt95文件
+session_destroy();  //删除server端session文件而已客户端PHPSESSID="8c8sr01vhi9rjgp99u9lgqpt95"依然存在，所以如果其他页面再次使用session_start(),client端会传递过来PHPSESSION,服务器session_start()会判断有没有session文件的存在，如果没有，那么自动创建，/tmp/sess_8c8sr01vhi9rjgp99u9lgqpt95 ,删除session_id的功能
+setcookie(session_name(),'',time()-3600,'/'); //删除客户端的session_id,第4个参数根路径一定要写，否则cookie会按着本php文件当前路径下的cookie删除，会找不到
+*/
+
+echo $_SESSION['web']; //在删除完毕session和cookie session_id后接下来依然可以获取到web内容，因为session_start()，把第一次读取到的session文件内容先放到内存中了,要在session_destory之前使用session_unset();
+
+
+
 
 
