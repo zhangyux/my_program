@@ -1,5 +1,4 @@
 <?php
-
 require("redis.php");
 //接收参数
 $username = $_POST['username'];
