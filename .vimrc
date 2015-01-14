@@ -20,8 +20,9 @@ set hlsearch			 "搜索时高亮显示被查找的文本
 set helplang=cn			 "帮助文档显示中文
 set nowrap			 " 不要换行
 "colorscheme murphy
-""colorscheme desert		 "主题选择，背景色
-colorscheme vividchalk
+"colorscheme desert		 "主题选择，背景色
+"colorscheme vividchalk
+colorscheme solarized
 
 "tab转换为四个字符
 set expandtab
@@ -81,6 +82,15 @@ set autochdir			" 自动切换当前目录为当前文件所在目录
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"php xdebug config 2014-10-26
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:debuggerPort = 9001
+let g:debuggerMaxDepth = 5
+"let g:dbgPavimPort = 9001
+"let g:dbgPavimBreakAtEntry = 0
+
 map <silent> <F9> :TlistToggle<cr>
 
 
@@ -148,8 +158,8 @@ function! CheckPHPSyntax()
     silent make
     clist
 endfunction
-au filetype php map <C-J> :call CheckPHPSyntax()<CR> au filetype php map <C-J> :call CheckPHPSyntax()<CR>
-au filetype php imap <C-J> <ESC>:call CheckPHPSyntax()<CR>
+map <C-J> :call CheckPHPSyntax()<CR>
+imap <C-J> <ESC>:call CheckPHPSyntax()<CR>
 "-----------------------------------------------------------end------/
 
 
@@ -188,8 +198,13 @@ endfunc
 autocmd BufNewFile * normal G
 
 
+""if has('gui_running')
+""    set background=light
+""else
+""    set background=dark
+""endif
 set background=dark "配置背景颜色为深色 light为浅色，防止行到一定宽度后背景变红,位置必须放在最后
-""set background=light "配置背景颜色为深色 light为浅色，防止行到一定宽度后背景变红,位置必须放在最后
+"set background=light "配置背景颜色为深色 light为浅色，防止行到一定宽度后背景变红,位置必须放在最后
 set guifont=Liberation\ Mono\ 10
 
 "插入模式下移动"
@@ -197,3 +212,4 @@ inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
 inoremap <c-h> <left>
+
