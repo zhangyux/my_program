@@ -1,17 +1,6 @@
-###the new text `here`
-
-
-
-
-
-
-> ![](http://admin.ljlj.cc/static/images/home_page/shop_index_03.gif)
-
-php:
-    
-    function test()
-    {
-        echo "12";
-    }
-    
-
+```javascript
+  var ihubo = {
+    nickName  : "草依山",
+    site : "http://jser.me"
+  }
+```
