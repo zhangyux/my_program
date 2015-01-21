@@ -12,7 +12,7 @@ interface Dog
     public function shout();
 }
 
-//红色狗
+//红色大狗角色
 class RedBigDog implements Dog
 {
     public function shout()
@@ -20,7 +20,7 @@ class RedBigDog implements Dog
         echo "RedBigDog Wao!Wao!Wao! \n";  
     }
 }
-//黑色狗
+//黑色大狗角色
 class BlackBigDog implements Dog
 {
     public function shout()
@@ -28,7 +28,7 @@ class BlackBigDog implements Dog
         echo "BlackBigDog Wao!Wao!Wao! \n";  
     }
 }
-//红色狗
+//红色小狗角色
 class RedSmallDog implements Dog
 {
     public function shout()
@@ -36,7 +36,7 @@ class RedSmallDog implements Dog
         echo "RedSmallDog Wao!Wao!Wao! \n";  
     }
 }
-//黑色狗
+//黑色小狗角色
 class BlackSmallDog implements Dog
 {
     public function shout()
