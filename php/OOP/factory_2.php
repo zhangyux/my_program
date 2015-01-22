@@ -58,6 +58,9 @@ interface AnimalFactory
     public function createDog($color);
     public function createPig($color);
 }
+
+//--------------------------------------------------------
+//具体工厂(Concrete Factory)角色：实现创建产品对象的操作。客户端直接调用这个角色创建产品的实例。
 //大动物工厂类
 class BigAnimalFactory implements AnimalFactory  
 {
@@ -106,6 +109,7 @@ class SmallAnimalFactory implements AnimalFactory
 
     }
 }
+//--------------------------------------------------------
 
 //客户端测试
 class testDriver
