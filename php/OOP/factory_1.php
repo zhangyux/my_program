@@ -1,6 +1,6 @@
 <?php
 /*
- * php 工厂模式实例代码一
+ * php 工厂模式实例代码一( 工厂方法模式)
  *
  * @author: liangxifeng
  * @date  : 2015-12-21
