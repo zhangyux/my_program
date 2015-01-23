@@ -1,6 +1,6 @@
 <?php
 /*
- * 使用工厂模式制作计算机demo
+ * 使用工厂模式制作计算器demo
  *
  * @author: Liangxifeng
  * @date  : 2015-01-23
