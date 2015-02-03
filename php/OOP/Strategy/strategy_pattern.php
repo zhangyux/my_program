@@ -52,3 +52,10 @@ class Context
         return $this->strategy->AlgorithmInterfac();
     }
 }
+//客户端调用
+class testClient
+{
+    public $content;
+    $content = new Context(new StrategyA);
+    $content->AlgorithmInterfac();
+}
