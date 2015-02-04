@@ -7,13 +7,13 @@
  * @date  : 2015-02-03
  */
 
-//现金收费抽象类，策略抽象类
+//现金收费抽象类，（抽象策略角色）
 abstract class CashSuper
 {
     //参数为原价，返回为当前价格
     abstract function acceptCash($srcMoney);
 }
-//正常收费子类
+//正常收费子类, （具体策略角色）
 class CashNormal extends CashSuper
 {
     //返回原价
@@ -22,7 +22,7 @@ class CashNormal extends CashSuper
         return $srcMoney;
     }
 }
-//打折收费子类
+//打折收费子类, （具体策略角色）
 class CashRebate extends CashSuper
 {
     private $rebate; //折扣,如98折，参数输入应为：0.98
@@ -39,7 +39,7 @@ class CashRebate extends CashSuper
         return $srcMoney * $this->rebate;
     }
 }
-//满反收费子类
+//满反收费子类, （具体策略角色）
 class CashReturn extends CashSuper
 {
     private $moneyCondition; //满反条件
@@ -59,7 +59,7 @@ class CashReturn extends CashSuper
         return $result;
     }
 }
-//CashContext类
+//CashContext类, （环境角色）
 class CashContext
 {
     public $cs = null; //声明一个CashSuper对象
