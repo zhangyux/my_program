@@ -59,7 +59,7 @@ class CashReturn extends CashSuper
         return $result;
     }
 }
-//CashContext类, （环境角色）
+//CashContext类, （环境角色）,持有一个策略类的引用，最终给客户端调用
 class CashContext
 {
     public $cs = null; //声明一个CashSuper对象
