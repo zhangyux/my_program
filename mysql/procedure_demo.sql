@@ -11,7 +11,7 @@
 --
 DELIMITER $$ 
 DROP 	PROCEDURE IF EXISTS `get_rzq`$$
-CREATE PROCEDURE `get_rzq` (in oid varchar(50), in nickName varchar(50) CHARACTER SET utf8)
+CREATE PROCEDURE `get_rzq` (in oid varchar(50), in nickName varchar(50) CHARACTER SET utf8) -- character set utf8 很重要，否则中文会乱码
 
 label_pro:BEGIN                                 -- label_pro自定义的，当在以下程序中需要exit的时候，可以 LEAVE label_pro;
 declare id int default 0;                       -- 软装券表主键id 
