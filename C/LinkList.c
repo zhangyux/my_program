@@ -1,5 +1,5 @@
 /*
- * C语言实现链表操作
+ * C语言实现单链表操作
  * date:2015-05-17
  */
 #include<stdio.h>
@@ -150,7 +150,7 @@ main(void)
 
     //向链表中插入新结点
     stu = (LinkList)malloc(LEN);  //新申请空间, 返回内存地址
-    printf("\n place input  new student num and score :");   
+    printf("\n place input  new student num and score :\n");   
     scanf("%ld, %f", &stu->num, &stu->score); 
     if(stu->num!=0)
     {
