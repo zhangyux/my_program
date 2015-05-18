@@ -12,12 +12,6 @@ typedef struct student
     float score;//分数 
     struct student *next; //指针指向下一学生信息个结点 
 }Node, *LinkList;  //为struct student 结构体定义两个别名：Node和*LinkList
-//定义头结点结构体
-typedef struct head
-{
-    int length;   //存储链表长度
-    struct student *next; 
-}Head; 
  
 //全局变量，本文模块中各函数均可调用  
 int n; 
@@ -34,7 +28,6 @@ LinkList create(void) //和以上两种情况等效
     n = 0; 
     //定义头结点
     p = (struct student *)malloc(LEN); 
-    p->num = 100; 
     top = p;         //头指针指向头结点
     p->next = NULL;  //头结点指针域指向NULL，代表空链表
 
@@ -85,6 +78,39 @@ LinkList del(Node *head, long num)
     }
     return  head; 
 }
+/*
+ * 向链表中新插入结点
+ * @param [point] - head 链表头指针
+ * @param [point] - newNode 新结点
+ * 返回头指针
+*/
+LinkList insert(Node *nhead, Node *nNode)
+{
+    LinkList cur, p, newNode; 
+    cur = nhead; 
+    cur = cur->next; 
+    newNode = nNode; 
+
+    //查找到在什么位置插入新结点
+    while(newNode->num > cur->num && cur->next!=NULL)
+    {
+        p = cur; 
+        cur = cur->next; 
+    }
+    //插入到链表中间
+    if(newNode->num<=cur->num)
+    {
+        p->next = newNode; 
+        newNode->next = cur; 
+    }else
+    //插入到链表最后
+    {
+        cur->next = newNode; 
+        newNode->next = NULL; 
+    }
+    ++n; 
+    return nhead; 
+}
 //打印链表
 void print(LinkList head)
 {
@@ -105,17 +131,30 @@ void print(LinkList head)
     }
 }
 
-main()
+main(void)
 {
     Node *head, *stu, *create(void); 
+    LinkList del(Node *head, long del_num); 
+    LinkList insert(Node *head, Node *nNode); 
+
+    //创建链表
     head = create(); 
     print(head); 
 
+    //删除链表
     printf("\n input the delete number:");   
     long del_num; 
     scanf("%ld",&del_num ); 
     head = del(head,del_num); 
     print(head); 
 
+    //向链表中插入新结点
+    stu = (LinkList)malloc(LEN);  //新申请空间, 返回内存地址
+    printf("\n place input  new student num and score :");   
+    scanf("%ld, %f", &stu->num, &stu->score); 
+    if(stu->num!=0)
+    {
+        head = insert(head, stu); 
+        print(head); 
+    }
 }
-
