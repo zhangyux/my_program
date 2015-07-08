@@ -979,6 +979,9 @@ $param = array('1'=>3,'2'=>3,'5'=>10);
 $a = $redis->hMset('user:1',$param);
 $b = $redis->hSet('user:1','1','20');
 $c = $redis->expire('user:1',10);
+//$del = $redis->hdel('user:1','1,2');
+$in = $redis->hIncrBy('user:1',1,2);
 $res = $redis->hGetAll('user:1');
+var_dump($res);
 $res = $redis->close();
 */
