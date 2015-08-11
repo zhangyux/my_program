@@ -1,0 +1,18 @@
+### 最短路径
+* 网图：`两个` 顶点之间经过的边上权值之和最小的路径；
+
+### 迪杰斯特拉（Dijkstra）算法
+* 按照路径长度递增的产生最短路径；
+* 不是一次性算出两个定点之间的最短距离；
+*  通过计算每个中间顶点的最短距离，最后推导出要求的顶点最短距离；
+
+![graph-matrix](https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/Dijkstra_1.png)
+![graph-Dijkstra_code1](https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/Dijkstra_2.png)
+
+![graph-Dijkstra_code2](https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/Dijkstra_3.png)
+
+1. 5~12行是初始化阶段，final一维数组值均为0，D数组记录所有顶点到v0的最短路径值，当前是{65535,1,5,65535,65535,65535,65535,65535,65535}，p数组全为0，表示目前还没有找到任意一个顶点的最短路径
+2. 13行是一个主循环，每循环一次求得v0与一个顶点的最短路径，也就是让一个顶点的final值为1
+3. 16～24行的循环，先令min为65535，通过w循环，与D[w]比较，找到目前最小的min和k值。当前是：D[1]的值最小，因为在第一次初始化的时候，v0连接的就两条边，v1和v2，如果是第二次循环，那就是D[2]
+4. 25～32行，是在修正之前已经判定的v0和某个点的最短距离，例如：在初始化的时候v0到v2的最短距离是5，但是第一次循环完成之后，发现v0->v1＝min=1,v1->v2=3，因此v0->v1->v2=min+G.matirx[v1][v2]=4，这个值是小于D[2]=5的
+
