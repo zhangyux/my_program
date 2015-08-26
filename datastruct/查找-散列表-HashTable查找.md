@@ -86,13 +86,13 @@
 * 散列表中只存储所有同义词字表的头指针;
 * 缺点: 查找时候需要遍历单链表, 有性能损耗;
 {12,67,56,16,25,37,22,29,15,47,48,34} mod 12 
-<img src="https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/search-hash-function-6.png" width="558">
+![](https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/search-hash-function-6.png)
 * 具体可以参见：[简单HashTable原理](http://www.arkulo.com/2015/03/03/HashTable/)
 
 ### 公共溢出区法
 * 冲突关键字存储到溢出表中 
 * 以上图有 37,48,34 是冲突的关键字,那么我们单独放在另外溢出表中, 可以将基本表和溢出表定义为两个数组;
-<img src="https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/search-hash-function-7.png" width="558">
+![](https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/search-hash-function-7.png)
 * 散列计算后，先基本表比较。不等，到溢出表进行顺序查找。
 
 ### 哈希表查找
@@ -102,5 +102,6 @@
  + 处理冲突的方法
  + 散列表的装填因子 装填因子=填入表中的记录个数/散列表长度。（表示散列表的装满的程度） 当填入表中的记录越多，装填因子越大，产生冲突可能性越大。
 * 通常设计散列表原则是: 将散列表空间设置的比查找集合大，牺牲空间换时间。
+
 > [hashTable查找的完整代码地址](https://github.com/liangxifeng833/my_program/blob/master/C/search/hash_search.c)
 
