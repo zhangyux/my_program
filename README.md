@@ -9,4 +9,4 @@
 * math - 数学相关
 * mysql - mysql数据库
 * php - php脚本语言
-* .vimrc - vim的配置文件，与上面的.vim目录放在同级目录下
+* vim - vim配置说明
