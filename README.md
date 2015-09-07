@@ -1,5 +1,4 @@
 ### 说明：
-* .vim - vim的配置目录
 * C - C语言
 * bash - shell脚本
 * datastruct - 数据结构
