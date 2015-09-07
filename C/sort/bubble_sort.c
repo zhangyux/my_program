@@ -3,24 +3,63 @@
  * 2015-09-05 
  */
 #include<stdio.h>
-/*
- * 最基础的顺序查找
- */
-
+#include<malloc.h>
 #define MAXSIZE 10 
-typedef struct
-{
-    int r[MAXSIZE+1];  //存放要排序的数组
-    int length;        //记录顺序表长度
-}sqList; 
 
-//交换Ｌ中数组r[i] 和 r[j]的值
-void swap(sqList *L, i, j)
+
+//交换数组r[i] 和 r[j]的值
+void swap(int *r, int i, int j)
 {
-    int tmp = L->r[i]; 
-    L->r[j] = L->r[i]; 
-    L->r[j] = tmp; 
+    int tmp = r[i]; 
+    r[i] = r[j]; 
+    r[j] = tmp; 
 }
+
+/*
+* 简单交换
+*/
+void bubbleSort_one(int *r, int len)
+{
+    int i, j; 
+    for(i=0; i<len; i++)
+    {
+        for(j=i+1; j<len; j++)
+        {
+            if(r[i]>r[j])
+            {
+                swap(r, i, j); 
+            }
+        }
+    }
+}
+
+/*
+* 冒泡排序
+*/
+void bubbleSort_two(int *r, int len)
+{
+    int i, j; 
+    for(i=0; i<len; i++)
+    {
+        for(j=len-2; j>=i; j--)
+        {
+            if(r[j]>r[j+1])
+            {
+                swap(r, j, j+1); 
+            }
+        }
+    }
+}
+
 main(void)
 {
+    int list[] = {9, 1, 5, 8, 3, 7, 4, 6, 2}; 
+    int len,  i; 
+    //求数组长度
+    len = sizeof(list)/sizeof(int); 
+    bubbleSort_two(list, len); 
+    for(i=0; i<len; i++)
+    {
+        printf("%d\n", list[i]); 
+    }
 }
