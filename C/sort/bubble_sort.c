@@ -75,6 +75,30 @@ void bubbleSort_three(int *r, int len)
         }
     }
 }
+/*
+* 简单选择排序
+*/
+void select_sort(int *r, int len)
+{
+    int i, j, min; 
+    for(i=0; i<len; i++)
+    {
+        //将当前下标定义为最小下标
+        min = i; 
+        for(j=i+1; j<len; j++)
+        {
+            if(r[min]>r[j])
+            {
+                min = j; 
+            }
+        }
+        //如果min!=1代表找到最小值, 接下来的操作就是交换了
+        if(min!=i)
+        {
+            swap(r, i, min); 
+        }
+    }
+}
 
 main(void)
 {
@@ -84,7 +108,8 @@ main(void)
     len = sizeof(list)/sizeof(int); 
     //bubbleSort_one(list, len); 
     //bubbleSort_two(list, len); 
-    bubbleSort_three(list, len); 
+    //bubbleSort_three(list, len); 
+    select_sort(list, len); 
     for(i=0; i<len; i++)
     {
         printf("%d\n", list[i]); 
