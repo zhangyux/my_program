@@ -4,7 +4,11 @@
  */
 #include<stdio.h>
 #include<malloc.h>
+
 #define MAXSIZE 10 
+#define TRUE 1
+#define FALSE 0
+typedef int status; 
 
 
 //交换数组r[i] 和 r[j]的值
@@ -50,6 +54,27 @@ void bubbleSort_two(int *r, int len)
         }
     }
 }
+/*
+* 冒泡排序优化
+*/
+void bubbleSort_three(int *r, int len)
+{
+    int i, j; 
+    //设置标志位
+    status flag=TRUE;   
+    for(i=0; i<len && flag; i++)
+    {
+        flag = FALSE; 
+        for(j=len-2; j>=i; j--)
+        {
+            if(r[j]>r[j+1])
+            {
+                swap(r, j, j+1); 
+                flag=TRUE; 
+            }
+        }
+    }
+}
 
 main(void)
 {
@@ -57,7 +82,9 @@ main(void)
     int len,  i; 
     //求数组长度
     len = sizeof(list)/sizeof(int); 
-    bubbleSort_two(list, len); 
+    //bubbleSort_one(list, len); 
+    //bubbleSort_two(list, len); 
+    bubbleSort_three(list, len); 
     for(i=0; i<len; i++)
     {
         printf("%d\n", list[i]); 
