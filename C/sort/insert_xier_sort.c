@@ -7,7 +7,7 @@
 
 
 /*
-* 简单选择排序
+* 直接插入排序
 */
 void insert_sort(int *r, int len)
 {
