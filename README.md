@@ -9,3 +9,4 @@
 * mysql - mysql数据库
 * php - php脚本语言
 * vim - vim配置说明
+* markdown - markdown一些特殊写法
