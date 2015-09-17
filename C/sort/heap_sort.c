@@ -48,10 +48,11 @@ void heap_sort(int *r, int len)
     {
         heapAdjust(r, i, len); 
     }
+    //每循环一次都将树的根结点，从数组最后的位置倒数向前排序
     for(i=len; i>1; i--)
     {
         swap(r, 1, i);  //将数组第一个元素与最后一个元素交换位置
-        heapAdjust(r,1,i-1); 
+        heapAdjust(r,1,i-1); //第一个元素与最后一个元素交换完毕后，最后一个就不参与调整构建大顶堆了，因为已经有序
     }
 }
 main(void)
