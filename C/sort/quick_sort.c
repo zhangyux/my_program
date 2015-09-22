@@ -55,9 +55,9 @@ void quick_sort(int *r, int low, int heigh)
     int pivot; 
     if(low<heigh)
     {
-        pivot = Partition(r, low, heigh); 
-        quick_sort(r, low, pivot-1); 
-        quick_sort(r, pivot+1, heigh); 
+        pivot = Partition(r, low, heigh);  //将r一分为二, 并算出枢轴值pivot
+        quick_sort(r, low, pivot-1);       //将比数轴值小的子序列递归排序
+        quick_sort(r, pivot+1, heigh);     //将比数轴值大的子序列递归排序
     }
 }
 main(void)
