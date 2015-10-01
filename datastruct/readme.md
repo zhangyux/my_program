@@ -48,6 +48,7 @@
 + 散列表查找`数据间没关系，通过哈希函数操作哈希表，注意哈希冲突`
 
 ### 五、排序
-![](https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/sort-summary-1.png)
+![](https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/sort-summary-1.png)   
+
 ![](https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/datastruct/sort-summary-2.png)
 
