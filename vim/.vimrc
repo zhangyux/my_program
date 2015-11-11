@@ -34,7 +34,9 @@ set tabstop=4
 set fenc=utf-8
 set encoding=utf-8
 let &termencoding=&encoding
-set fileencodings=utf-8,gb18030,gbk,gb2312,usc-bom,euc-jp,cp936,ucs-bom,latin1
+set fileencodings=utf-8,gb18030,gbk,gb2312,latin1,usc-bom,euc-jp,cp936,ucs-bom
+set fileencoding=utf-8
+set fileformats=unix
 set confirm                      " 在处理未保存或只读文件的时候，弹出确认
 filetype on			 " 侦测文件类型
 filetype plugin on  		 " 载入文件类型插件
@@ -212,4 +214,3 @@ inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
 inoremap <c-h> <left>
-
