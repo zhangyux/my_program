@@ -13,7 +13,8 @@ end;
 
 ### 二，规则
 
-* 输入参数例子，我们选择了会话变量@x证明成功的将参数传入了改变量.
+* 输入参数例子，我们选择了会话变量@x证明成功的将参数传入了改变量．
+
 
 ```
 mysql> CREATE PROCEDURE p2(p INT) SET @x = p ;//  
@@ -33,6 +34,7 @@ mysql> SELECT @x//  
 
 
 * 输出参数的例子，我们选择会话变量@y去接收存储过程p3
+
 
 ```
 mysql> CREATE PROCEDURE p3(OUT p INT)  
@@ -94,4 +96,51 @@ call pr_no_param();  
 ```
 
 ### 三，实例：
+* 批量添加数据（预制原始券）
+
+```
+/*
+* 预制原始券
+-- @author: liangxifeng
+-- @date  : 2015-11-25
+-- @param : int - @ticketCount  - 要预制的券数量
+-- @return: 成功返回:成功预制数量, 失败:返回具体信息
+-- @php调用: mysql_fetch_assoc(mysql_query("CALL initTicket(100)"));
+*/
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `initTicket` $$
+CREATE PROCEDURE initTicket( IN ticketCount INT ) 
+    BEGIN 
+    DECLARE i INT DEFAULT 0;              	-- 计数器
+    DECLARE returnMsg VARCHAR(50) DEFAULT '';   -- 返回值信息
+    DECLARE rowCount int DEFAULT 0;             -- 操作sql的时候影响行数
+    IF ticketCount >= 10000 || ticketCount=0 THEN
+	  SET returnMsg = 'paramError';
+          SELECT returnMsg;
+    ELSE
+	  outer_label:BEGIN
+	  START TRANSACTION;
+	  WHILE i < ticketCount DO
+		SET i=i+1;
+		INSERT INTO `ticket_main`   (`ticket_status`,`ticket_add_time`) VALUES (0,now());
+		SELECT row_count() INTO rowCount;
+		IF rowCount<=0 THEN
+			LEAVE outer_label;			
+		END IF; 				
+	  END WHILE;
+	
+	  END outer_label;  -- 只要是在outer_label代码块内 任意位置 Leave outer_label,那么Leave后的代码将不再执行 
+
+	  IF i=ticketCount THEN
+		COMMIT;
+		SET returnMsg = i;
+          ELSE
+		ROLLBACK;
+		SET returnMsg = 'error';
+   	  END IF;
+	  SELECT returnMsg;
+    END IF;
+END $$
+DELIMITER ;
+```
 [代码实例](https://github.com/liangxifeng833/my_program/blob/master/mysql/procedure_demo.sql)
