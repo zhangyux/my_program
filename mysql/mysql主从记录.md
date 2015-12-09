@@ -1,9 +1,9 @@
 ### 一，主从的工作原理
 ![master-slave](https://raw.githubusercontent.com/liangxifeng833/my_program/master/images/mysql/master-slave.gif)
-1. master将改变记录到二进制日志(binary log)中（这些记录叫做二进制日志事件，binary log events）, Slave根据本机的master.info文件中记录的Master的日志文件名程和具体位置，通过IO进程连接上Master并请求从指定日志文件的指定位置（或者从最开始的日志）之后的日志内容；      
-2. Master接收到来自Slave的IO进程的请求后，通过负责复制的IO进程根据请求信息读取制定日志指定位置之后的日志信息，返回给Slave 的IO进程。返回信息中除了日志所包含的信息之外，还包括本次返回的信息已经到Master端的bin-log文件的名称以及bin-log的位置；
-3. slave将master的binary log events拷贝到它的中继日志(relay log)；        
-4. slave中的sql进程发现relay-log日志有改动后，根据relay.info中的relay位置，从relay-log的该位置开始重做中继日志中的事件，将sql语句在本地数据库执行。
+* 1. master将改变记录到二进制日志(binary log)中（这些记录叫做二进制日志事件，binary log events）, Slave根据本机的master.info文件中记录的Master的日志文件名程和具体位置，通过IO进程连接上Master并请求从指定日志文件的指定位置（或者从最开始的日志）之后的日志内容；      
+* 2. Master接收到来自Slave的IO进程的请求后，通过负责复制的IO进程根据请求信息读取制定日志指定位置之后的日志信息，返回给Slave 的IO进程。返回信息中除了日志所包含的信息之外，还包括本次返回的信息已经到Master端的bin-log文件的名称以及bin-log的位置；
+* 3. slave将master的binary log events拷贝到它的中继日志(relay log)；        
+* 4. slave中的sql进程发现relay-log日志有改动后，根据relay.info中的relay位置，从relay-log的该位置开始重做中继日志中的事件，将sql语句在本地数据库执行。
 ```
 [root@service mysql]# cat relay-log.info
 ./service-relay-bin.000002
@@ -20,7 +20,7 @@ userpassword----->远程master端mysql的replication密码
 3306------------->远程master端mysql端口
 ```
 
-5. [主从配置请点击](http://blog.csdn.net/hguisu/article/details/7325124)
+* 5. [主从配置请点击](http://blog.csdn.net/hguisu/article/details/7325124)
 
 ### 二，使用中遇到的问题
 * 公司采用 A:主-> B:从(blackhole)->C:从 架构;
