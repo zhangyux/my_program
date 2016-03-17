@@ -27,6 +27,46 @@ public class practice2 {
 		//使用Arrays类toAstring方法将数组转换为字符串输出
 		System.out.println(Arrays.toString(scores));
 	}
+	public double calcAvg(double score1, double score2)
+	{
+		return (score1+score2)/2;
+	}
+	
+	/*
+	 * java 中方法的重载
+	 * １，必须是在同一个类中
+	 * ２， 方法名相同
+	 * ３，方法参数的个数、顺序或类型不同
+	 * ４，与方法的修饰符或返回值没有关系　
+	 *  ５，当调用被重载的方法时， Java 会根据参数的个数和类型来判断应该调用哪个重载方法，
+	 *  　　参数完全匹配的方法将被执行。
+	 */
+	public void show()
+	{
+		System.out.println("无参的show方法");
+	}
+	public void show(String name)
+	{
+		System.out.println("带有一个字符串参数的show方法，参数值为"+name);
+	}
+	public String show(String name, int age)
+	{
+		System.out.println("带有两个字符串参数的show方法，参数值为"+name+age);
+		return name+age;
+	}
+	/*
+	 * 功能：创建指定长度的int型数组，并生成100以内随机数为数组中的每个元素赋值
+	 * 定义一个带参带返回值的方法，通过参数传入数组的长度，返回赋值后的数组
+	 */
+	public int[] getArray(int length)
+	{
+		int [] nums = new int[length];
+		for(int i = 0; i < nums.length; i++)
+		{
+			nums[i] = (int)(Math.random()*100); //100以内的随机数
+		}
+		return nums;
+	}
 	
 	public static void main(String[] args) {
 		practice2 test = new practice2();
@@ -38,5 +78,18 @@ public class practice2 {
 		//调用printArr方法
 		int[]  scores = {84,91,74,62};
 		test.printArr(scores); 
+		double avgScore = test.calcAvg(94,81);
+		System.out.println("成绩的平均分为"+avgScore);
+		
+		//重载调用
+		test.show();
+		test.show("liangxifeng");
+		test.show("liangxifeng", 20);
+		
+		//练习
+		// 调用方法并将返回值保存在变量中
+		int nums[] = test.getArray(10);
+		// 将数组转换为字符串并输出
+		System.out.println(Arrays.toString(nums));
 	}
 }
