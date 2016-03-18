@@ -10,7 +10,24 @@ public class Telphone {
 	//内存
 	float mem;
 	
-	//定义方法
+	/*
+	 * 构造方法与类名相同，如果不定义构造方法，那么程序在实例化的时候，系统会自动创建
+	 * 与类名相同的无参构造方法，构造方法无返回值
+	 */
+	public Telphone()
+	{
+		 System.out.println("我是无参构造方法");
+	}
+	/*
+	 * 构造方法的重载
+	 */
+	public Telphone(float screen, float cpu, float mem)
+	{
+		 System.out.println("我是有参构造方法，参数分别是："+screen+cpu+mem );
+	}
+	/*
+	 * 自定义方法
+	 */
 	public void showConfig()
 	{
 		int age; //在定义局部变量后，如果不赋值就时候java是不允许的

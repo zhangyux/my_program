@@ -29,7 +29,8 @@ public class practice2 {
 	}
 	public double calcAvg(double score1, double score2)
 	{
-		return (score1+score2)/2;
+		double res =  (score1+score2)/2;
+		 return res;
 	}
 	
 	/*
@@ -98,6 +99,11 @@ public class practice2 {
 		phone.cpu = 1.4f;
 		phone.mem = 2.5f;
 		phone.showConfig();
+		
+		//实例化Telphone类为对象, 使用构造方法实现初始化操作
+		Telphone phone2 = new Telphone();
+		//实例化Telphone类为对象, 使用构造方法实现初始化操作,　并传递参数，使用重载的有参构造方法
+		Telphone phone3 = new Telphone(18.2f,1.5f, 2.8f);	
 		
 	}
 }
