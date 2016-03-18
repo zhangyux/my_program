@@ -91,5 +91,13 @@ public class practice2 {
 		int nums[] = test.getArray(10);
 		// 将数组转换为字符串并输出
 		System.out.println(Arrays.toString(nums));
+		
+		//实例化Telphone类为对象, 实例化其他文件中的类，注意与php不同点，不需要include文件
+		Telphone	 phone = new  Telphone();
+		phone.screen = 15.2f;
+		phone.cpu = 1.4f;
+		phone.mem = 2.5f;
+		phone.showConfig();
+		
 	}
 }
