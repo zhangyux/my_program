@@ -23,7 +23,7 @@ public class Telphone {
 	 */
 	public Telphone(float screen, float cpu, float mem)
 	{
-		 System.out.println("我是有参构造方法，参数分别是："+screen+cpu+mem );
+		 System.out.println("我是有参构造方法，参数分别:"+screen+cpu+mem );
 	}
 	/*
 	 * 自定义方法

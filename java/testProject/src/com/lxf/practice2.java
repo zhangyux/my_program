@@ -6,6 +6,8 @@ import java.util.Arrays;
  * date 2016-03-14
  */
 public class practice2 {
+	double score1 = 90;
+	static double score2=99;
 	/*-------------------------------- java 方法的使用---------------------------------------------------*/
 	// 访问修饰符　返回值类型　方法名（参数列表）｛方法体｝
 	//方法返回值的类型，如果方法不返回任何值，则返回值类型指定为 void ( 也就是无参无返回值方法 )
@@ -68,7 +70,41 @@ public class practice2 {
 		}
 		return nums;
 	}
-	
+	/*-------------------------------- Java 中的 static 使用之静态变量-----------------------------------------------------------------------*/
+	/*
+	 *  static 修饰的成员称为静态成员或类成员
+	 *  它属于整个类所有，而不是某个对象所有,即被类的所有对象所共享
+	 * 静态成员可以使用类名直接访问，也可以使用对象名进行访问
+	 * 使用 static 可以修饰变量、方法和代码块
+	 *  静态方法中可以直接调用同类中的静态成员，但不能直接调用非静态成员，
+	 *  如果希望在静态方法中调用非静态变量，可以通过创建类的对象，然后通过对象来访问非静态变量
+	 *  在普通成员方法中，则可以直接访问同类的非静态变量和静态变量
+	 */
+	//使用 static 声明静态变量
+	static  String className = "java 开发一班";
+	//使用 static 声明静态方法
+	public  static   void print2()
+	{
+		/*
+		practice2 test = new practice2();
+		System.out.println("在静态方法中访问非静态方法："+test.score1);
+		System.out.println("在静态方法中访问静态方法："+practice2.score2);
+		*/
+	}
+	/*
+	 *  在类的声明中，可以包含多个初始化块，当创建类的实例时，就会依次执行这些代码块。
+	 *  静态初始化块只在类加载时执行，且只会执行一次，同时静态初始化块只能给静态变量赋值，
+	 *  不能初始化普通的成员变量。
+	 */
+	{ //普通初始化块，
+		score1 = 1222222;
+		score2 = 133333;
+		System.out.println(score1+score2);
+	}
+	static { //静态初始化块，该初始化在内存中的执行顺序要先于以上普通初始化块，只能给静态变量赋值
+		score2 = 12333;
+		System.out.println(score2);
+	}
 	public static void main(String[] args) {
 		practice2 test = new practice2();
 		//调用test方法
@@ -104,6 +140,13 @@ public class practice2 {
 		Telphone phone2 = new Telphone();
 		//实例化Telphone类为对象, 使用构造方法实现初始化操作,　并传递参数，使用重载的有参构造方法
 		Telphone phone3 = new Telphone(18.2f,1.5f, 2.8f);	
+		
+		// 访问静态变量，输出班级名称
+		System.out.println(practice2.className);
+		//使用类名访问静态方法
+		practice2.print2();
+		// 使用变量名访问静态方法
+		test.print2();
 		
 	}
 }
