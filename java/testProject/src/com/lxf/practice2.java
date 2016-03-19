@@ -1,13 +1,63 @@
 package com.lxf;
 import java.util.Arrays;
+//java中在不同的包下可以存在相同的类, 默认导入该文件所在包的所有类文件, import com.lxf.*
+//import com.lxf.second.Telphone;
+
 /*
  * java练习二 
  * @author  liangxifeng
  * date 2016-03-14
  */
+
+/*
+ * #### ######################## java的封装特性 ######################################
+ * 1. java中访问修饰符的访问范围
+  *    private : 		 本类　            			
+ *    默认：   		 本类　同包　				
+ *    protected 　本类    同包  子类　
+ *    public         　本类    同包  子类 　其他 　
+ *   java中 this 关键字作用和php中一样，都代表本对象，只是使用的时候没有$符号，比如：this.name;
+ *   java中static关键字 修饰的成员称为静态成员或类成员，下面有详细介绍
+ * 
+ * 2.  Java 中的内部类
+ *      定义在另外一个类里面的类。与之对应，包含内部类的类被称为外部类, 内部类的主要作用如下：
+ *      (1) 内部类提供了更好的封装，可以把内部类隐藏在外部类之内，不允许同一个包中的其他类访问该类
+ *      (2) 内部类的方法可以直接访问外部类的所有数据，包括私有的数据
+ *      (3)  内部类所实现的功能使用外部类同样可以实现，只是有时使用内部类更方便
+ *      内部类分为：成员内部类，静态内部类，方法内部类，匿名内部类
+ *      外部类是不能直接使用内部类的成员和方法滴
+ *      
+ * 3. 静态内部类， static 修饰的内部类
+ * 　静态内部类不能直接访问外部类的非静态成员，但可以通过 new 外部类().成员 的方式访问 
+ * 　如果外部类的静态成员与内部类的成员名称相同，可通过“类名.静态成员”访问外部类的静态成员；
+ * 　如果外部类的静态成员与内部类的成员名称不相同，则可通过“成员名”直接调用外部类的静态成员
+ * 　创建静态内部类的对象时，不需要外部类的对象，可以直接创建 内部类 对象名= new 内部类();
+ * 
+ * 4. 方法内部类就是内部类定义在外部类的方法中，方法内部类只在该方法的内部可见，即只在该方法内可以使用。
+ *     由于方法内部类不能在外部类的方法以外的地方使用，因此方法内部类名不能使用访问控制符和 static 修饰符。
+ */
 public class practice2 {
 	double score1 = 90;
 	static double score2=99;
+	private int score3 = 100; //私有变量，如果在类的外部访问时，需要调用类的方法
+	private String name = "liangxifeng";
+	
+	/*
+	 * 访问类中的私有属性，需要方法间接访问，
+	 * 为了标准通常访问私有属性的方法命名规则为get+属性名(首字母大写)
+	 */
+	public int getScore3()
+	{
+		return score3;
+	}
+	/*
+	 * 修改类中的私有属性，需要方法间接修改，
+	 * 为了标准通常修改私有属性的方法命名规则为set+属性名(首字母大写)
+	 */
+	public void setScore3(int newScore)
+	{
+		 this.score3 = newScore;
+	}
 	/*-------------------------------- java 方法的使用---------------------------------------------------*/
 	// 访问修饰符　返回值类型　方法名（参数列表）｛方法体｝
 	//方法返回值的类型，如果方法不返回任何值，则返回值类型指定为 void ( 也就是无参无返回值方法 )
@@ -70,7 +120,7 @@ public class practice2 {
 		}
 		return nums;
 	}
-	/*-------------------------------- Java 中的 static 使用之静态变量-----------------------------------------------------------------------*/
+	/*-------------------------------- Java 中的 static 关键字使用之静态变量-----------------------------------------------------------------------*/
 	/*
 	 *  static 修饰的成员称为静态成员或类成员
 	 *  它属于整个类所有，而不是某个对象所有,即被类的所有对象所共享
@@ -148,5 +198,59 @@ public class practice2 {
 		// 使用变量名访问静态方法
 		test.print2();
 		
+		//实例化内部类
+		Inner i = test.new Inner();
+		//访问内部类的方法
+		i.iShow();
+		
+		// 直接创建内部静态类的对象
+        SInner si = new SInner();
+        // 调用show方法
+		si.show();
+		
+		//调用外部类的outM方法
+		test.outM();
 	}
+	
+	//成员内部类的创建（普通内部类）
+	public class Inner
+	{
+		//定义和外部类同样的属性名
+		double score1 = 9;
+		public void iShow()
+		{
+			System.out.println("访问外部类中的score1="+practice2.this.score1);
+			System.out.println("访问内部类中的score1="+this.score1);
+		}
+	}
+	 //创建静态内部类
+	public   static   class SInner
+	{
+        // 内部类中的变量score
+        double score2 = 91;
+		public void show() {
+			System.out.println("访问外部类中的score2：" +practice2.score2);
+			System.out.println("访问内部类中的score2：" + this.score2);
+		}
+	}
+	//定义外部类方法
+	public void outM()
+	{
+		//定义方法内部类
+		class MInner
+		{
+			private int score = 83;
+			public int getScore()
+			{
+				return score+10;
+			}
+		}
+		//创建方法内部类对象
+		MInner mi = new MInner();
+		//调用内部类的方法
+		int newScore = mi.getScore();
+		System.out.println("姓名："+this.name+"\n方法内部类加分后的值为："+newScore);
+	}
+	
+	
 }
