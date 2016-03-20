@@ -33,6 +33,13 @@ public class Initail {
 	    //直接输出对象，如果在dog类中不重写toString方法则输出的是一个hash算法过的字符串，代表对象的内存地址，否则输出dog类的属性值
 		System.out.println("直接输出dog对象:"+dog);
 		
+		//多态的测试
+		Animal obj1 = new Animal(); //父类引用指向本类
+		Animal obj2 = new Dog();       //父类引用指向子类对象
+		//Dog obj3 = new Animal();    //错误的写法
+		obj1.eat();
+		obj2.eat();
+		
 
 	}
 
