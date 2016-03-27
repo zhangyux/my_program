@@ -1,4 +1,4 @@
-package com.lxf;
+package com.lxf.exception;
 /*
  * 自定义异一个喝大了的异常,自定义异常的父类可以是Exception，也可以是其他异常类
  */

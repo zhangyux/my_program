@@ -1,4 +1,4 @@
-package com.lxf;
+package com.lxf.exception;
 /*
  * java异常链的测试
  */

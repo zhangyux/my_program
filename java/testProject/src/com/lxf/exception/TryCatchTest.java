@@ -1,4 +1,4 @@
-package com.lxf;
+package com.lxf.exception;
 /*
  * 异常处理测试
  */
