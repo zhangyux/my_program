@@ -354,6 +354,6 @@ public class HelloWorld{
 		//产生 [0,1) 之间的随机浮点数
 		System.out.println("[0,1)的随机数："+Math.random());
 		//产生 [0,99) 之间的随机浮点数
-		System.out.println("[0,99)的随机数："+Math.random()*99);
+		System.out.println("[0,99)的随机数："+(int) (Math.random()*99));
 	}
 }
