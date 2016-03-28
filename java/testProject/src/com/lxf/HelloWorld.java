@@ -1,12 +1,16 @@
 package com.lxf;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;  // 导入java.text 包中的 SimpleDateFormat，格式化日期时间 
 import java.util.Arrays; //导入数组操作类
+import java.util.Calendar; //导入Calendar日期类
+import java.util.Date;    //导入日期类
 /*
  * java练习一 基本语法变量，循环到数组的使用
  * @author  liangxifeng
  * date 2016-03-05
  */
 public class HelloWorld{
-	public static void main(String[] args){
+	public static void main(String[] args) throws ParseException{
 		/*----------------------------------------------基本变量定义--------------------------------------*/
 		//字符串变量的定义
 		String love = "liangxifeng";
@@ -219,9 +223,137 @@ public class HelloWorld{
 		String hobbyStr = hobbyNew.toString();
 		
 		
+		/*----------------------------------------------------java中的包装类-------------------------------------------------------------*/
+		/*
+		 *  基本数据类型int float, double, boolean, char等不具备对象的特性，
+		 *  java为每个基本数据类型都提供了一个包装类
+		 *  包装类就可以实现基本数据类型的对象操作
+		 *  
+		 *  基本数据类型    对应的包装类
+		 *  byte                     Byte
+		 *  short                   Short
+		 *  int                         Integer
+		 *  long                      Long
+		 *  float                      Float
+		 *  double                 Double
+		 *  char                      Character
+		 *  boolean               Boolean
+		 *  
+		 *  包装类包含两大类方法：
+		 *  １．将本类型和其他基本类型进行转换的方法
+		 *  ２．将字符串和本类型以及包装类相互转换的方法
+		 *   int i = 2;                                                   //定义int类型变量，值为２
+		       Integer m = new Integer(5);           //定义Integer包装类对象，值为５，整形作为参数
+		       Integer n  = new Integer("8");       //定义Integer包装类对象，值为８，整形字符串作为参数
+		 *  
+		 */
+	
+		/*
+		 *  基本类型与包装类的互转，以下以Integer为例：
+		 *  装箱：把基本数据类型转换为包装类，使其具有对象的性质
+		 *  又分为：手动装箱和自动装箱
+		 */
+		int i = 10;
+		Integer  m = new Integer(i);  //手动装箱
+		Integer  n = i;                               //自动装箱
+		System.out.println(m+","+n);
+		/*
+		 *  拆箱：把包装类对象转换为基本数据类型的值
+		 *  又分为：手动拆箱和自动拆箱
+		 */
+		Integer j = new Integer(100);
+		int m2 = j.intValue(); //手动拆箱
+		int n2  = j;	                  //自动拆箱
+		/*
+		 *  java中基本数据类型和字符串之间的转换，一下以int型为例，其他类型方法一致
+		 *  基本类型转换为字符串的三种方法：
+		 *  １．使用包装类的 toString() 方法
+		 *  ２．使用String类的 valueOf() 方法
+		 *  ３．用一个空字符串加上基本数据类型，得到的就是基本数据类型数据对应的字符串
+		 *  比如：
+		 */
+		int m3 = 10;
+		String str5 = Integer.toString(m3);   //方法一
+		String str6 = String.valueOf(m3);       //方法二
+		String str7 = m3+"";                                //方法三
+		/*
+		 * 字符串 转换为基本类型的两种方法：
+		 *  １．调用包装类的 parseXxx 静态方法
+		 *  ２．调用包装类的 valueOf() 方法转换为基本类型的包装类，会自动拆箱
+		 *  比如：
+		 */
+		String str8 = "8";
+		int d = Integer.parseInt(str8);  //方法一
+		int e = Integer.valueOf(str8);    //方法二
 		
-    
 		
+		/*-------------------------------------------使用 Date 和 SimpleDateFormat 类表示时间----------------------------------------------*/
+		//使用默认的构造方法创建Date对象，注意：要在头部引入　import java.util.Date;
+		Date d1 = new Date();
+		System.out.println(d1); //输出结果为当前时间：Mon Mar 28 15:31:13 CST 2016
 		
+		// 创建SimpleDateFormat对象，指定目标格式
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+		// 创建Date对象，表示当前时间  
+        Date now = new Date();
+        // 调用format()方法，将日期转换为字符串并输出
+		System.out.println(sdf1.format(now));    //2016年03月28日 15时53分02秒
+		System.out.println(sdf2.format(now));    //2016/03/28 15:53
+		System.out.println(sdf3.format(now));    //2016-03-28 15:53:02
+
+		// 使用parse()方法将文本转换为日期
+		String day = "2014-6-1 21:05:36";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");   
+         // 调用parse()方法，将字符串转换为日期
+		Date date = sdf.parse(day);
+		
+		/*------------------------------------------------Calendar 类的应用-------------------------------------------------------*/
+		/*java.util.Calendar 类是一个抽象类，可以通过调用 getInstance() 静态方法获取一个 Calendar 对象，
+		 * 此对象已由当前日期时间初始化，即默认代表当前时间，如 Calendar c = Calendar.getInstance();
+		 * 
+		 * 调用 Calendar 类的 getInstance() 方法获取一个实例，然后通过调用 get() 方法获取日期时间信息，
+		 * 参数为需要获得的字段的值， Calendar.Year 等为 Calendar 类中定义的静态常量。
+		 */
+		// 创建Canlendar对象
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);  			                //获取年
+		int month = cal.get(Calendar.MONTH)+1;              //获取月 0表示1月份
+		int day1 = cal.get(Calendar.DAY_OF_MONTH);      //获取日期
+		int hour = cal.get(Calendar.HOUR_OF_DAY);         //获取小时	
+		int minute = cal.get(Calendar.MINUTE);                //获取分钟
+		int second = cal.get(Calendar.SECOND);                //获取秒
+		System.out.println("当前时间："+year+"-"+month+"-"+day1+" "+hour + ":"+minute+":"+second);  //当前时间：2016-3-28 16:27:10
+		/*
+		 * Calendar 类提供了 getTime() 方法，用来获取 Date 对象，完成 Calendar 和 Date 的转换，
+		 * 还可通过 getTimeInMillis() 方法，获取此 Calendar 的时间值，以毫秒为单位。如下所示：
+		 */
+		// 将Calendar对象转换为Date对象
+		Date curDate = cal.getTime();
+		// 将日期转换为指定格式的字符串
+		String nowDate = sdf3.format(curDate);
+		System.out.println(nowDate);  //2016-03-28 16:31:03
+		
+		/*------------------------------------------------使用 Math 类操作数据-------------------------------------------------------*/
+		/*
+		 * Math 类位于 java.lang 包中，包含用于执行基本数学运算的方法， 
+		 * Math 类的所有方法都是静态方法，所以使用该类中的方法时，可以直接使用类名.方法名，如： Math.round();
+		 */
+		double af = 12.81;
+		int bi = (int) af; //将double类型强制转换为int类型，去掉小数位
+		System.out.println("强制类型转换："+bi); //12
+		//四舍五入
+		long cf = Math.round(af); 
+		System.out.println("四舍五入："+cf);
+		//向下取 整
+		System.out.println("向下取整："+Math.floor(af));
+		//向上取 整
+		System.out.println("向下取整："+Math.ceil(af));
+		//产生 [0,1) 之间的随机浮点数
+		System.out.println("[0,1)的随机数："+Math.random());
+		//产生 [0,99) 之间的随机浮点数
+		System.out.println("[0,99)的随机数："+Math.random()*99);
 	}
 }
