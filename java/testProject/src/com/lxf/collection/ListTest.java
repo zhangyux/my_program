@@ -93,13 +93,39 @@ public class ListTest {
 		}
 	}
 	/**
+	 * 修改list中的元素
+	 */
+	public void testModify()
+	{
+		courseToSelect.set(4, new Course("8"," 毛概"));
+	}
+	/**
+	 * 删除List中的元素
+	 */
+	public void testRemove()
+	{
+		Course cr = (Course) courseToSelect.get(4);
+		System.out.println("我是课程："+ cr.id + cr.name + ", 我即将被删除");
+		// 通过传入对象，删除List中元素
+		courseToSelect.remove(cr);  //或直接使用索引位置删除：courseToSelect.remove(4);
+		//删除索引下标为4和５位置的元素
+		Course[] courses = {(Course) courseToSelect.get(4),(Course) courseToSelect.get(5)};
+		courseToSelect.removeAll(Arrays.asList(courses));
+		System.out.println("成功删除课程！");
+		tesForEach();
+	}
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		ListTest lt = new ListTest();
 		lt.testAdd();
 		lt.testGet();
+		/*
 		lt.testIterator();
+		lt.testModify();
 		lt.tesForEach();
+		*/
+		lt.testRemove();
 	}
 }
