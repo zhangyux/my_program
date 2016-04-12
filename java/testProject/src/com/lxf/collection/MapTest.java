@@ -109,6 +109,35 @@ public class MapTest {
 		}
 	}
 	/**
+	 * 通过put修改测试
+	 */
+	public void testModify()
+	{
+		System.out.println("请输入要修改的学生ID:");
+		//创建一个Scanner对象，用来活取输入的学生ID
+		Scanner console = new Scanner(System.in);
+		while(true)
+		{
+			//取得从键盘输入的学生ID
+			String stuId = console.next();
+			//从student中查找该学生ID对应的学生对象
+			Student student = students.get(stuId);
+			if(student == null)
+			{
+				System.out.println("输入的ID不存在！请重新输入：");
+				continue;
+			}
+			System.out.println("请输入新的学生姓名：");
+			//取得从键盘输入的学生姓名
+			String stuName = console.next();
+			Student st = new Student(stuId,stuName);
+			students.put(stuId, st);
+			System.out.println(" 修改成功！");
+			break;
+		}
+		
+	}
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -116,7 +145,9 @@ public class MapTest {
 		MapTest mt = new MapTest();
 		mt.testPut();
 		mt.testKeySet();
-		mt.testRemove();
+//		mt.testRemove();
+//		mt.testEntrySet();
+		mt.testModify();
 		mt.testEntrySet();
 	}
 
