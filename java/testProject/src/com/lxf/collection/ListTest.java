@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;            //引入list集合接口
 import java.util.ArrayList;  //引入list集合接口的实现类
+import java.util.Scanner;
 
 /**
  * 被选课程类
@@ -12,9 +13,12 @@ import java.util.ArrayList;  //引入list集合接口的实现类
 public class ListTest {
 	//用于存放备选课程的list容器
 	public List  courseToSelect;
+	//键盘输入对象
+	private Scanner console;
 	public ListTest()
 	{
 		this.courseToSelect = new ArrayList();
+		this.console = new Scanner(System.in);
 	}
 	
 	/**
@@ -115,17 +119,38 @@ public class ListTest {
 		tesForEach();
 	}
 	/**
+	 * 测试List中的contains方法
+	 * 通过contains判断list中是否有某一个对象的时候，原理是：循环list的每一个对象，并通过调用每个对象的equals方法，
+	 * 所以我们要在list包含的对象所在类型重写java顶层对象Object的 equals方法，如下操作：
+	 * 打开Course类中，在eclipse编辑器中选择：Sourse->generate hashCode and equals
+	 */
+	public void testListContains()
+	{
+		//获取备选课程序列的第0个元素
+		Course course = (Course)courseToSelect.get(0);
+		System.out.println("取得课程：" + course.name);
+		System.out.println("备选课程是否包含:" + course.name + "," + courseToSelect.contains(course));
+		System.out.println("请输入课程ID：");
+		String cId = console.next();
+		System.out.println("请输入课程name：");
+		String cName = console.next();
+		//新创建一个课程对象
+		Course course2 = new Course(cId,cName);
+		System.out.println("备选课程是否包含新建对象:" + course2.name + "," + courseToSelect.contains(course2));
+	}
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		ListTest lt = new ListTest();
 		lt.testAdd();
-		lt.testGet();
+		lt.testListContains();
+		//lt.testGet();
 		/*
 		lt.testIterator();
 		lt.testModify();
 		lt.tesForEach();
 		*/
-		lt.testRemove();
+		//lt.testRemove();
 	}
 }
