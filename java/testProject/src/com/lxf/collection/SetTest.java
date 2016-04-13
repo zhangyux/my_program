@@ -14,11 +14,15 @@ import java.util.Scanner;
 public class SetTest {
 	//被选课程列表
 	public List <Course> courseToSelect;
+	//键盘输入对象
+	private Scanner console;
+	public Student student;
 	/*
 	 * 构造器
 	 */
 	public SetTest(){
 		this.courseToSelect = new ArrayList<Course>();
+		this.console = new Scanner(System.in);
 	}
 	/**
 	 * 用于往courseToSelect中添加备选课程
@@ -50,20 +54,13 @@ public class SetTest {
 			System.out.println("课程："+cr.id + ":" + cr.name);
 		}
 	}
-
 	/**
-	 * @param args
+	 * 创建学生对象并且选课
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		SetTest st = new SetTest();
-		//添加备选课程列表
-		st.testAdd();
-		//循环遍历备选课程
-		st.testForEach();
-		
+	public void createStudentAndSelectCourse()
+	{
 		//创建一个学生对象
-		Student student = new Student("1","小明");
+		student = new Student("1","小明");
 		System.out.println("欢迎学生：" + student.name + "选课");
 		//创建一个Scanner对象，用来接收从键盘输入的课程ID
 		Scanner console = new Scanner(System.in);
@@ -73,7 +70,7 @@ public class SetTest {
 			//接收键盘输入的课程id
 			String courseId = console.next();
 			//循环备选课程列表
-			for (Course cr : st.courseToSelect) {
+			for (Course cr : courseToSelect) {
 				//判断如果输入的id与备选课程列表中的id相等，则将该课程对象添加到学生对象的课程属性set的集合中
 				if(cr.id.equals(courseId))
 				{
@@ -86,7 +83,40 @@ public class SetTest {
 				}
 			}
 		}
-		st.testForEachForSet(student);
+	}
+	/**
+	 * 测试Set的contains方法
+	 * Set的contains原理是：在调用set的contains时候，其实是遍历set的每个元素
+	 * 并且调用每个元素对象的hashCode()方法，如果hashCode值相等的时候，在调用每个元素对象的equals
+	 * 只有在hashCode()和equals()全部返回true的时候，才认定该hashSet包含某一个元素
+	 * 所以以下使用student.course.contains时候，需要在Course.java课程类中重写hashCode()和equals()方法
+	 * 打开Course.java文件，使用Eclipse编辑器的Source->Generate hashCode And equals() 为为我们自动生成这两个方法
+	 */
+	public void testSetContains()
+	{
+		System.out.println("请输入已选课程ID：");
+		String cId = console.next();
+		System.out.println("请输入学生已选的课程名称:");
+		String cName = console.next();
+		//新创建一个课程对象
+		Course course2 = new Course(cId,cName);
+		System.out.println("已选课程是否包含新建对象:" + course2.name + "," + student.course.contains(course2));
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		SetTest st2 = new SetTest();
+		//添加备选课程列表
+		st2.testAdd();
+		//循环遍历备选课程
+		st2.testForEach();
+		//穿件学生对象并选课
+		st2.createStudentAndSelectCourse();
+		//判断学生已选课程中是否包含输入的学生
+		st2.testSetContains();
 	}
 	/**
 	 * foreach方式循环遍历输出学生所选择的所有课程

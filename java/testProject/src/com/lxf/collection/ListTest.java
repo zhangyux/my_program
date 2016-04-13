@@ -137,6 +137,12 @@ public class ListTest {
 		//新创建一个课程对象
 		Course course2 = new Course(cId,cName);
 		System.out.println("备选课程是否包含新建对象:" + course2.name + "," + courseToSelect.contains(course2));
+		//通过indexOf()方法来取得某元素第一次出现的索引位置，lastIndexOf()返回最后一个出现的索引位置
+		//indexOf的实现机制是：循环遍历list中的每个对象，调用每个对象的equals方法，如果存在则返回对应索引位置, 否则返回-1
+		if(courseToSelect.contains(course2))
+		{
+			System.out.println("课程：" + course2.name + "的在list中的索引位置是：" + courseToSelect.indexOf(course2));
+		}
 	}
 	/**
 	 * @param args
