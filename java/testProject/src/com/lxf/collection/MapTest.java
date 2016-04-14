@@ -138,17 +138,52 @@ public class MapTest {
 		
 	}
 	/**
+	 * 测试Map中是否包含某个Key和Value值
+	 */
+	public void testContainsKeyOrValue()
+	{
+		System.out.println("请输入要查询的学生ID:");
+		//创建一个Scanner对象，用来活取输入的学生ID
+		Scanner console = new Scanner(System.in);
+		//使用map的containsKey()方法判断用户输入的id是否存在学生映射表中
+		String id = console.next();
+		boolean isContainKey = this.students.containsKey(id);
+		System.out.println("您输入的ID为：" + id + "在学生映射对象表中是否存在：" + isContainKey);
+		if(isContainKey)
+		{
+			System.out.println("对应的学生为：" + this.students.get(id).name);
+		}
+		
+		//使用map的containsValue()方法判断用户输入的姓名是否存在学生映射表中
+		System.out.println("请输入要查询的学生姓名:");
+		String name = console.next();
+		//新创建学生对象
+		Student st = new Student(null,name);
+		boolean isContainValue = this.students.containsValue(st);
+		if(isContainValue)
+		{
+			System.out.println("在学生映射表中确实存在学生：" + name);
+		}else
+		{
+			System.out.println("该学生：" + name + "在学生映射表中不存在!");
+		}
+		
+		
+		
+	}
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MapTest mt = new MapTest();
 		mt.testPut();
-		mt.testKeySet();
+//		mt.testKeySet();
 //		mt.testRemove();
-//		mt.testEntrySet();
-		mt.testModify();
 		mt.testEntrySet();
+//		mt.testModify();
+//		mt.testEntrySet();
+		mt.testContainsKeyOrValue();
 	}
 
 }
