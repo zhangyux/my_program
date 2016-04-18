@@ -4,10 +4,12 @@ import java.util.HashSet;   //引入set集合接口的实现类
 
 /**
  * 学生类
+ * 本类implements Comparable<Student>目的为了解决类collectionsTest中testSort3()，
+ * 对Student泛型的List进行排序
  * @author lxf
  */
 
-public class Student {
+public class Student implements Comparable<Student> {
 	public String id;
 	public String name;
 	public Set<Course> course;
@@ -39,6 +41,12 @@ public class Student {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+	@Override
+	public int compareTo(Student arg0) {
+		// TODO Auto-generated method stub
+		//使用当前对象的id和比较参数对象的id比较
+		return this.id.compareTo(arg0.id);
 	}
 	
 }
