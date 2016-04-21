@@ -1,5 +1,5 @@
 @startuml
-title 后台新增活动
+title 后台促销活动抽象
 actor subClass #red
 /'-------------定义参与者别名 -------------------'/
 participant "saleAbstract\n活动新增或修改抽象接口C" as add #00FF00
