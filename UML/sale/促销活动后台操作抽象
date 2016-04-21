@@ -1,0 +1,13 @@
+@startuml
+title 后台新增活动
+actor subClass #red
+/'-------------定义参与者别名 -------------------'/
+participant "saleAbstract\n活动新增或修改抽象接口C" as add #00FF00
+subClass->add: _checkParam()验证参数
+activate add
+     	/'---------验证必要参数----------------------------'/
+		alt empty(_baseArray[活动名]) ||  empty(_dateArray[type]) || empty(_dateArray[data])
+		  add-->subClass:false
+		end
+deactivate add
+@enduml
