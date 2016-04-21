@@ -29,28 +29,28 @@ group 赋值父类活动对象
 	end
 end
 
-/'========================验证是否可以删除========================'/
-group 验证是否可以删除
-	del->del:_checkIsDel()验证是否可以删除
-	activate del
+/'========================调用父类方法验证是否可以删除========================'/
+group 调用父类方法验证是否可以删除
+	del->saleA:parent::_checkDate()验证是否可以删除
+	activate saleA
 		participant "saleWechat\n活动主表类L" as saleL #FFFFFF
 		/'-------------------活动是否开始-----------------------------------------'/
-		del->saleL: this.saleObj.isStart()活动是否开始
-		saleL-->del:boolean
+		saleA->saleL: this.saleObj.isStart()活动是否开始
+		saleL-->saleA:boolean
 		alt this.saleObj.isStart() 已经开始
-			del-->del: 'stared'
+			saleA-->del: 'stared'
 		end
 		
 		/'-------------------活动是否结束-----------------------------------------'/
-		del->saleL: this.saleObj.isExpire()活动是否过期
-		saleL-->del:boolean
+		saleA->saleL: this.saleObj.isExpire()活动是否过期
+		saleL-->saleA:boolean
 		alt this.saleObj.isExpire() 已经过期
-			del-->del: 'expired'
+			saleA-->del: 'expired'
 		end
-		del-->del: 'ok'
-	deactivate del
+		saleA-->del: 'ok'
+	deactivate saleA
 	
-	alt 'ok' != _checkIsDel()
+	alt 'ok' != _checkDate()
 		del-->view: errorMsg("活动已开始或已过期");
 	end
 end

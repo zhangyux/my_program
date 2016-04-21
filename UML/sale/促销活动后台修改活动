@@ -68,19 +68,14 @@ group 赋值父类活动对象
 	deactivate saleA
 end
 	
-/'========================验证活动是否开始========================================='/
-group 验证活动是否开始
-	add->saleL:this._saleObj.isStart()验证活动是否开始
-	activate saleL
-		alt lifeHandle->isStart()
-			note over saleL: return true;
-		else
-			note over saleL: return false;
-		end
-	saleL-->add:boolean
-	deactivate saleL
-	alt this._saleObj.isStart()已开始
-		add-->view:errorMsg('活动已经开始，不允许修改！');
+/'========================调用父类方法验证是否可以修改========================'/
+group 调用父类方法验证是否可以修改
+	add->saleA:parent::_checkDate()验证是否可以修改
+	activate saleA
+	saleA-->add:res
+	deactivate saleA
+	alt 'ok' != _checkDate()
+		add-->view:errorMsg('活动已开始或已过期');
 	end
 end
 	
