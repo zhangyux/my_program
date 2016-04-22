@@ -19,7 +19,7 @@ group 验证参数
 	end note
 	
 	/'-------------调用父类的验证参数方法---------'/
-    participant "saleAbstract\n活动新增或修改的抽象接口C" as saleA #00FF00
+    participant "saleAbstract\n活动新增或修改的抽象接口C" as saleA #ADD8E6
      add->saleA:parent::_checkParam()\n调用父类的验证参数方法
      activate saleA
      saleA-->add: boolean
@@ -33,7 +33,7 @@ group 验证参数
 /'========================初始化活动类并保存活动基本信息========================================'/
 group 初始化活动类并保存活动基本信息
 	/'--------------初始化活动类------------------------'/
-	participant "saleWechat\n活动主表类L" as saleL #FFFFFF
+	participant "Sale_wechat\n活动主表类L" as saleL #FFFFFF
 	add->saleL:load实例化活动主表类
 	activate saleL
 	saleL-->add: saleObj
@@ -71,11 +71,11 @@ end
 /'========================新增促销日期========================================'/	
 group 新增促销日期
 	alt  1== dateType['type'] 连续日期新增
-		participant "saleLifeContinue\n连续日期类L" as conti  #FFFFFF
+		participant "Sale_life_continue\n连续日期类L" as conti  #FFFFFF
 		add->conti:save()
 		conti-->add:saveRes
 	else 间断日期新增
-		participant "saleLifeGap\n连续日期类L" as gap  #FFFFFF
+		participant "Sale_life_gap\n连续日期类L" as gap  #FFFFFF
 		add->gap:save()
 		gap-->add:saveRes
 	end

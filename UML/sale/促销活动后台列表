@@ -11,7 +11,7 @@ activate list
 
 	/'=============================查询主表================================='/
 	group 查询主表
-		participant "saleWechat\n活动主表类L" as saleL #FFFFFF
+		participant "Sale_wechat\n活动主表类L" as saleL #FFFFFF
 			list->saleL: 根据where通过Rest获取活动对象 \n "<font color=red> <b>"注意：附加加载初始化对应日期对象
 		activate saleL
 			saleL-->list:saleObj

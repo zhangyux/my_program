@@ -3,7 +3,7 @@ title 后台修改活动（SUC003）
 actor view #red
 /'-------------修改请求get -------------------'/
 ==修改请求get ==
-participant "saleModify\n活动新增C" as add #00FF00
+participant "saleModify\n活动修改C" as add #00FF00
 view->add: index_get()
 activate add
 	note over add
@@ -55,7 +55,7 @@ end
 group 赋值父类活动对象
 	add->saleA:parent::_getSaleRow(saleId)通过活动表主键获取活动对象
 	activate saleA
-		participant "saleWechat\n活动主表类L" as saleL #FFFFFF
+		participant "Sale_wechat\n活动主表类L" as saleL #FFFFFF
 		saleA->saleL:通过Rest的get方法映射, 条件是活动表主键,\n "<font color=red> <b>"注意：附加加载初始化对应日期对象
 		activate saleL
 		saleL-->saleA: saleObj
