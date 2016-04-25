@@ -70,16 +70,11 @@ end
 
 /'========================新增促销日期========================================'/	
 group 新增促销日期
-	alt  1== dateType['type'] 连续日期新增
-		participant "Sale_life_continue\n连续日期类L" as conti  #FFFFFF
-		add->conti:save()
-		conti-->add:saveRes
-	else 间断日期新增
-		participant "Sale_life_gap\n连续日期类L" as gap  #FFFFFF
-		add->gap:save()
-		gap-->add:saveRes
-	end
-	alt 'sucess' != saveRes
+	add->saleA:parent::_addDate()调用父类方法新增日期
+	activate saleA
+	saleA-->add:boolean
+	deactivate saleA
+	alt 'sucess' != _addDate()
 		add-->view:errorMsg("新增日期失败!")
 	else
 		add-->view: status=>1

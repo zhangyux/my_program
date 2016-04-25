@@ -97,24 +97,11 @@ group 保存修改日期操作
 	/'------------------------修改日期-------------------------------------'/
 	add->add:_modifyDate()\n修改日期
 	activate add
-		/'------------------------如果日期类型相同-------------------------------------'/
-		alt dateArray[type] == this.saleObj.sw_date_type 如果日期类型相同
-			alt  1== dateArray['type'] 连续日期新增
-				note over add: 连续日期赋值
-			else 间断日期新增	
-				note over add: 间断日期赋值
-			end 	
-			note over add: saveRes = this.saleObj.lifeHandle.save()
-		else 	日期类型不同
-				note over add: this._saleObj.lifeHandle.destroy()删除原日期，"<font color=red><b>"注意：间断日期需要循环删除
-				ref over add
-					程序运行方式与<< 新增时序图 >>添加日期方式一致
-					saveRes 为处理结果
-				end
-		end
-		alt 'sucess' != saveRes
-			add-->add: boolean
-		end	
+		note over add: this._saleObj.lifeHandle.destroy()删除原日期，"<font color=red><b>"注意：间断日期需要循环删除
+		add->saleA:parent::_addDate()调用父类方法新增日期
+		activate saleA
+		saleA-->add:boolean
+		deactivate saleA
 	deactivate add
 /'------------------------修改日期结束-------------------------------------'/
 	
