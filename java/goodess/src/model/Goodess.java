@@ -1,4 +1,7 @@
 package model;
+/**
+ * 数据库对应的实体类，goodess数据表
+ */
 
 import java.util.Date;
 
