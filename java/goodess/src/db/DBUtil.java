@@ -6,11 +6,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import com.mysql.jdbc.Statement;
 
+
 public class DBUtil {
-	private static final String URL = "jdbc:mysql://localhost:3306/test";
+	private static final String URL = "jdbc:mysql://192.168.22.22:3306/test";
 	private static final String NAME = "common";
 	private static final String PASS = "common";
 	
