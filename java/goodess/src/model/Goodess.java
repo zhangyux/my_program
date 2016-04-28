@@ -55,5 +55,12 @@ public class Goodess {
 	public void setUpdate_time(Date update_time) {
 		this.update_time = update_time;
 	}
+	@Override
+	public String toString() {
+		return "Goodess [id=" + id + ", user_name=" + user_name + ", sex="
+				+ sex + ", birthday=" + birthday + ", email=" + email
+				+ ", add_time=" + add_time + ", update_time=" + update_time
+				+ "]";
+	}
 	
 }

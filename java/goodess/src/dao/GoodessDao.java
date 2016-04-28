@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -53,24 +54,49 @@ public class GoodessDao {
 	}
 	/*
 	 * 修改女神
+	 * param [Goodess] gs 女神对象
 	 */
-	public void updateGoddess()
+	public void updateGoddess(Goodess gs) throws SQLException
 	{
+		String sql = " UPDATE goodess SET user_name = ? , sex = ? , birthday = ? , update_time = current_date  " + 
+				" WHERE id = " + " ? ";
+		//预编译
+		PreparedStatement ptmt = conn.prepareStatement(sql);
+		//为预编译的占位符赋值
+		ptmt.setString(1, gs.getUser_name());
+		ptmt.setInt(2,gs.getSex());
+		ptmt.setDate(3, new Date(gs.getBirthday().getTime()));
+		ptmt.setInt(4, gs.getId());
+		//执行sql语句
+		ptmt.execute();
 		
 	}
 	/*
 	 * 删除女神
 	 */
-	public void delGoddess()
+	public void delGoddess(Integer id) throws SQLException
 	{
-		
+		String sql = " DELETE  FROM goodess WHERE  id = ? LIMIT 1";
+		//预编译
+		PreparedStatement ptmt = conn.prepareStatement(sql);
+		ptmt.setInt(1, id);
+		ptmt.execute();
 	}
 	/*
 	 * 查询女神
+	 * param [list] param 查询条件list
 	 */
-	public List<Goodess> query() throws SQLException
+	public List<Goodess> query(List<Map<String, Object>> param) throws SQLException
 	{
-		ResultSet res = stmt.executeQuery("select * from goodess");
+		StringBuilder sql =  new StringBuilder("SELECT * FROM goodess WHERE 1==1 ");
+		for (Map<String, Object> map : param) {
+			sql.append(" AND map.");
+		}
+		
+		sql.append("");
+		//预编译
+		PreparedStatement ptmt = conn.prepareStatement(sql.toString());
+		//ResultSet res = stmt.executeQuery("select * from goodess");
 		//建立返回女神返回值集合，作为返回值
 		List<Goodess> gd = new ArrayList<Goodess>();
 		//建立用来存储女神对象的变量名，初值为null
@@ -90,8 +116,22 @@ public class GoodessDao {
 	/*
 	 * 查询单个女神
 	 */
-	public Goodess get()
+	public Goodess get(Integer id) throws SQLException
 	{
-		return null;
+		Goodess g = new Goodess();
+		String sql = "SELECT * FROM goodess WHERE id = ?";
+		//预编译
+		PreparedStatement ptmt = conn.prepareStatement(sql);
+		ptmt.setInt(1, id);
+		//获取结果集合
+		ResultSet res = ptmt.executeQuery();
+		res.next();
+		g.setId(res.getInt("id"));
+		g.setSex(res.getInt("sex"));
+		g.setUser_name(res.getString("user_name"));
+		g.setAdd_time(res.getDate("add_time"));
+		g.setUpdate_time(res.getDate("update_time"));
+		g.setBirthday(res.getDate("birthday"));	
+		return g;
 	}
 }
