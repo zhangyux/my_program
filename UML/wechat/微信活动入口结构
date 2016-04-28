@@ -6,116 +6,139 @@ actor 微信用户 #red
 participant "wechatIndex\n微信对外接口C" as index #00FF00
 微信用户->index: index()
 activate index
-	== 验证 ==
+/'=======================验证参数========================'/
+group 1: 验证参数
 	alt empty(this.userMsgObj || !is_Object(this.userMsgObj))
 		note over index: echo ''; exit;微信服务器不作任何处理，并记录log
 	end
+end
 	
-	== 初始化促销配置类 ==
+/'=======================初始化促销配置类========================'/
+group 2: 初始化促销配置类
 	participant "saleConfig\n活动配置类L" as config #FFFFFF
 	/'初始化活动配置类'/
-	index->config:__construct(userMsgObj)
+	index->config:__construct(this.userMsgObj)
+	activate config
 		note over config
 			赋值用户信息对象
 			this.userMsgObj = userMsgObj
 		end note
+	config-->index:none
+	deactivate config
+end 
 		
-		== 获取促销活动类型 ==
+/'=======================获取促销活动类型========================'/
+group  3: 获取促销活动类型
 		index->config: getSaleType()获取活动类型
 			activate config
 				note over config
 					分割用户发送字符串 ,内容比如：A-1-业务信息,
 					 (A:活动种类标识, 1:该活动种类特殊规则, 业务信息:具体的业务需求字符)
 					$textArr = explode(" -",userMsgObj.Content)
-					$dictionary = array('A'=>array(saleId=>1,library=>'sale/wechat//RushTicketApi','isPhone'=>0), 'B'=>'其他活动类型');
-					sale/wechat/RushTicketApi 含义是：对应library
+					
+					$dictionary = array('A'=>array(saleId=>1,library=>'wechat/','isPhone'=>0), 'B'=>'其他活动类型');
+					saleId含义：活动主键
+					wechat/ 含义是：对应library
 					isPhone＝>0 : 含义：使用码规则是否绑定手机号，　０不绑定手机号获取批量生成使用吗，１绑定手机号需要用户输入手机
 					//定义活动类型（"<font color=red><b>也就是下面促销业务逻辑加载的library名称"）				
-					$saleType = array($dictionary[$textArr[0]], $textArr[1]);
-					$saleType说明：下标0: 该活动的信息array(saleId=>活动表sale_wechat主键，library=>'具体处理业务逻辑的library名')
-								　　下标1: 特殊规则代号
+					
+					$saleType = array(sales=>$dictionary[$textArr[0]], rule=>$textArr[1],'keyword'=>$textArr[2]);
+					$saleType下标说明：sales: 该活动的信息array(saleId=>活动表主键，...')
+								　　 	 rule: 特殊规则代号
+								         	 keyword:业务需求关键字，比如：批次编号
 				end note
 			config-->index: 成功：$saleType，失败：false
 			destroy config
-			
-			== 处理具体促销活动业务罗辑 ==
-			alt $saleType
-				participant "RushTicketApi\n微信抢券类L" as rush #FFFFFF
-				group 实例化抢券类对象
-					index->rush:__construct(userMsgObj,saleType)
-					activate rush
-						participant "WechatTicketAbstract\n微信抢券抽象类L" as rushA #ADD8E6				
-						rush->rushA:parent::__construct(userMsgObj,saleType)
-							activate rushA
-								note over rushA
-									赋值请求信息对象
-									this.userMsgObj = userMsgObj
-									赋值活动类型
-									this._saleType = saleType
-								end note
-								/'查询具体活动信息'/
-								participant "saleWechat\n微信活动信息类L" as sale #FFFFFF
-								rushA->rushA:getSaleInfo(saleId)\n查询活动信息表
-								activate rushA
-									rushA->sale:通过主键saleId\n以Rest方式获取活动对象\n"<font color=red><b>注意：在查询时候要实例活动日期对象"
-									activate sale
-									sale-->rushA:this._saleObj  = obj \n返回为活动对象属性赋值
-									deactivate sale
-								deactivate rushA
-								
-								/'验证活动是否开始'/
-								rushA->rushA:_isStart()判断活动是否开始
-								activate rushA
-									rushA->sale:_isStart()
-									activate sale								
-										sale-->rushA: 已经开始:true 未开始: false
-										alt _isStart()
-											note over rushA:this.startFlag = 1;
-										end
-									deactivate sale
-								deactivate rushA
-								rushA-->rush:end
-							deactivate rushA
-								
-								alt 1==startFlag 如果已开始
-									/'加载配置类'/
-									participant "Config\n配置类L" as configB #FFFFFF
-									rush->configB:getRule($saleType[1]);获取规则类名
-									activate configB
-										note over configB
-											$ruleLib = 'Rule_'.$saleType[1];
-										end note
-									configB-->rush:	$ruleLib (比如：Rule_1)
-									deactivate configB
-									
-									/'加载对应规则类'/
-									alt $ruleLib
-										participant "Rule_1\n规则类L" as rule #FFFFFF
-										rush->rule:index(userMsgObj)
-										activate rule
-											alt 当前时间 < 10点
-												note over rule: msg =  '现在不是领券时间，请稍后再试';
-												/'实例化微信返回text信息接口对象'/
-												participant "WechatReturnText\n微信返回文本信息类L" as responseT #FFFFFF
-												rule->responseT:__construct(userMsgObj)
-													note over responseT:在本身构造器中parent::_constuct(userMsgObj)\n父类构造器初始化this.userMsgObj
-												rule->responseT:responseMsg(msg)\n调用返回微信用户信息
-											end
-										rule-->rush:
-										deactivate rule
-									end
-								end
-						rush-->index:obj
-					deactivate rush
-				end
-				
-				group 调用index()处理业务逻辑
-					index->rush:obj->index()				
-					activate rush		
-						rush-->index:
-					deactivate rush
-				end				
-			end
+end
+
+/'=======================判断用户发送信息是否活动匹配========================'/
+group  4: 判断用户发送信息是否活动匹配
+	alt empty($saleType[sales]) || empty($saleType[rule] || empty(keyword))
+		note over index: echo '';exit;如果不符合条件，则微信无任何信息返回给用户
+	end
+end
+
+/'=======================返回微信用户告知等待========================'/
+group 5: 返回给用户告知等待信息
+participant "WechatReturnText\n微信返回文本信息类L" as responseT #FFFFFF
+	index->responseT:__construct(this.userMsgObj)
+			note over responseT:在本身构造器中\nparent::_constuct(userMsgObj)\n父类构造器初始化this.userMsgObj
+	index->responseT:responseMsg(请您耐心等待...)\n调用返回微信用户信息
+	activate responseT
+	responseT-->微信用户:请您耐心等待...
+	deactivate responseT
+end
 		
+/'=======================实例化抢券类对象开始 ========================'/	
+group  6: 实例化抢券类对象
+	participant "RushTicketApi\n微信抢券类L" as rush #FFFFFF
+	index->rush:__construct(userMsgObj,saleType)
+	activate rush
+		participant "WechatTicketAbstract\n微信抢券抽象类L" as rushA #ADD8E6		
+		/'----------------------parent:contruct构造父类开始----------------------------'/
+		group 6.1 构造父类 		
+			rush->rushA:parent::__construct(userMsgObj,saleType)
+				activate rushA
+					note over rushA
+						赋值请求信息对象
+						this.userMsgObj = userMsgObj
+						赋值活动类型
+						this._saleType = saleType
+					end note
+									
+					/'---查询具体活动信息---'/
+					participant "Sale_wechat\n微信活动信息类L" as sale #FFFFFF
+					rushA->rushA:getSaleInfo(saleId)\n查询活动信息表
+					activate rushA
+						rushA->sale:通过主键saleId\n以Rest方式获取活动对象\n"<font color=red><b>注意：在查询时候要实例活动日期对象"
+						activate sale
+						sale-->rushA:this._saleObj  = obj \n返回为活动对象属性赋值
+						deactivate sale
+					deactivate rushA
+									
+					/'---验证活动是否开始---'/
+					rushA->rushA:_isStart()判断活动是否开始
+					activate rushA
+						rushA->sale:_isStart()
+						activate sale								
+							sale-->rushA: 已经开始:true 未开始: false
+							alt _isStart()
+								note over rushA:this._startFlag = 1;
+							end
+						deactivate sale
+					deactivate rushA
+					rushA-->rush:end
+				deactivate rushA
+			end
+			/'----------------------parent:contruct构造父类结束----------------------------'/
+			
+			/'----------------------parent:contruct构造父类结束----------------------------'/
+			group 6.2 : 个性化规则验证					
+			alt 1==startFlag 如果已开始
+				/'---加载配置类---'/
+				participant "Config\n配置类L" as configB #FFFFFF
+				rush->configB:getRule($saleType[rule]);获取规则类名
+				activate configB
+					note over configB:$ruleLib = 'Rule_'.$saleType[1];
+				configB-->rush:	$ruleLib (比如：Rule_1)
+				deactivate configB
+									
+				/'---加载对应规则类---'/
+				alt $ruleLib
+					participant "Rule_1\n规则类L" as rule #FFFFFF
+					rush->rule:index(userMsgObj)
+					activate rule
+						alt 当前时间 < 10点
+							note over rule:  调用微信客服接口返回：'现在不是领券时间，请稍后再试';
+						end
+						rule-->rush:
+					deactivate rule
+				end
+			end
+		rush-->index:obj
+		deactivate rush
+	end
+end
+/'=======================实例化抢券类对象结束 ========================'/		
 deactivate index
 @enduml
