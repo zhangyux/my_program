@@ -101,7 +101,7 @@ public class GoodessDao {
 		List<Goodess> gd = new ArrayList<Goodess>();
 		//建立用来存储女神对象的变量名，初值为null
 		Goodess g = null;
-		while(res.next())
+		while(res.next())	
 		{
 			g = new Goodess();
 			g.setId(res.getInt("id"));
