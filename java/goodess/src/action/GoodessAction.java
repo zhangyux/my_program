@@ -2,8 +2,11 @@ package action;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dao.GoodessDao;
 import model.Goodess;
@@ -18,16 +21,27 @@ public class GoodessAction {
 		// TODO Auto-generated method stub
 		GoodessDao g = new GoodessDao();
 		//查询女神多条记录
-		/*
-		List<Goodess> gs = g.query();
+		//定义查询参数
+		List<Map<String,Object>> params = new ArrayList<Map<String,Object>>();
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("name", "user_name");
+		param.put("rela", "like");
+		param.put("value", "'%liangxifeng%'");
+		params.add(param);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("name", "sex");
+		map.put("rela", "=");
+		map.put("value", "1");
+		params.add(map);
+		List<Goodess> gs = g.query(params);
+		//遍历查询的结果
 		for (Goodess goodess : gs) {
-			System.out.print(goodess.getId());
-			System.out.println(goodess.getUser_name());
+			System.out.println(goodess.toString());		
 		}
-		*/
-		
+			
+		/*
 		Goodess gs1 = new Goodess();
-		gs1.setUser_name("liangxifeng modify");
+		gs1.setUser_name("liangxifeng modify new");
 		gs1.setSex(1);
 		gs1.setBirthday(new Date());
 		gs1.setUpdate_time(new Date());
@@ -42,6 +56,7 @@ public class GoodessAction {
 		//查询单个女神
 		Goodess gObj = g.get(1);
 		System.out.println(gObj.toString());
+		*/
 	}
 
 }

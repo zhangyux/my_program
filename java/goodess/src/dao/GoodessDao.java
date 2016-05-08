@@ -88,12 +88,20 @@ public class GoodessDao {
 	 */
 	public List<Goodess> query(List<Map<String, Object>> param) throws SQLException
 	{
-		StringBuilder sql =  new StringBuilder("SELECT * FROM goodess WHERE 1==1 ");
-		for (Map<String, Object> map : param) {
-			sql.append(" AND map.");
+		StringBuilder sql =  new StringBuilder("SELECT * FROM goodess WHERE 1=1 ");
+		if(param !=null && param.size()>0)
+		{
+			for(int i=0; i<param.size(); i++)
+			{
+				Map<String,Object> paramNew = param.get(i);
+				sql.append("AND " + paramNew.get("name"));
+				sql.append(" " + paramNew.get("rela"));
+				sql.append(" " + paramNew.get("value"));
+			}		
 		}
-		
-		sql.append("");
+
+		//print sql
+		System.out.println(sql.toString());
 		//预编译
 		PreparedStatement ptmt = conn.prepareStatement(sql.toString());
 		//ResultSet res = stmt.executeQuery("select * from goodess");
@@ -101,6 +109,7 @@ public class GoodessDao {
 		List<Goodess> gd = new ArrayList<Goodess>();
 		//建立用来存储女神对象的变量名，初值为null
 		Goodess g = null;
+		ResultSet res = ptmt.executeQuery();
 		while(res.next())	
 		{
 			g = new Goodess();
@@ -110,7 +119,7 @@ public class GoodessDao {
 			g.setSex(res.getInt("sex"));
 			//g.setBirthday(res.getDate(columnIndex));
 			gd.add(g);
-		}
+		}	
 		return gd;
 	}
 	/*
