@@ -34,6 +34,11 @@ public class View {
 	private static final String OPERATION_EXIT = "EXIT";
 	private static final String OPERATION_BREAK = "BREAK";
 	
+	//实例女神对象
+	private Goodess goodess = new Goodess();
+	//实例action控制器对象
+	private GoodessAction action = new GoodessAction();
+	
 
 	/**
 	 * @param args
@@ -52,59 +57,118 @@ public class View {
 		//用户阶段
 		int step = 0;
 		
+		View view = new View();
+		
 		//如果键盘有输入值的情况
 		while(console.hasNext())
 		{
 			String in = console.next().toString();
 			//退出
-			if(OPERATION_EXIT.equals(in.toUpperCase()) 
-					|| OPERATION_EXIT.substring(0, 1).equals(in.toUpperCase()))
+			if(OPERATION_EXIT.equals(in.toUpperCase()) || OPERATION_EXIT.substring(0, 1).equals(in.toUpperCase()))
 			{
 				System.out.println("您已成功退出" );
 				break;
 			//新增女神
-			}else if(OPERATION_ADD.equals(in.toUpperCase()) 
-					|| OPERATION_ADD.substring(0, 1).equals(in.toUpperCase()) 
-					|| OPERATION_ADD.equals(histroyFlag))
+			}else if(OPERATION_ADD.equals(in.toUpperCase())  || OPERATION_ADD.substring(0, 1).equals(in.toUpperCase()) || OPERATION_ADD.equals(histroyFlag))
 			{
 				histroyFlag = OPERATION_ADD;
-				if(0==step)
-				{
-					System.out.println("您输入女神姓名:");
-				}
-				if(1==step)
-				{
-					System.out.println("您输入的女神姓名是:"+in);
-					goodess.setUser_name(in);
-					System.out.println("请输入的女神的生日: 格式为：yyyy-MM-dd");
-				}else if(2==step)
-				{
-					System.out.println("您输入的女神生日是:"+in);	
-					//System.out.println("您输入的女神生日为:"+in);
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					Date birthday = null;
-					try {
-						birthday = sdf.parse(in);
-						goodess.setBirthday(birthday);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						System.out.println("输入格式有误,请重新输入生日:");
-						step = 1;
-					}
-					try {
-						goodess.setSex(5);
-						action.add(goodess);
-						System.out.println("新增女神成功!");	
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						System.out.println("新增女神失败!");	
-					}
-				}
+				view.add(in, step);
+			}
+			//修改女神
+			else if(OPERATION_UPDATE.equals(in.toUpperCase())  || OPERATION_UPDATE.substring(0, 1).equals(in.toUpperCase()) || OPERATION_UPDATE.equals(histroyFlag))
+			{
+				histroyFlag = OPERATION_UPDATE;
+				view.update(in,step);
 			}
 			step++;
 		}
 	}
 
+	/**
+	 * 新增女神
+	 * @param String in 用户输入值
+	 * @param Int step 调用方执行次数
+	 */
+	private void add(String in, int step)
+	{
+		if(0==step)
+		{
+			System.out.println("您输入女神姓名:");
+		}
+		if(1==step)
+		{
+			System.out.println("您输入的女神姓名是:"+in);
+			goodess.setUser_name(in);
+			System.out.println("请输入的女神的生日: 格式为：yyyy-MM-dd");
+		}else if(2==step)
+		{
+			System.out.println("您输入的女神生日是:"+in);	
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date birthday = null;
+			try {
+				birthday = sdf.parse(in);
+				goodess.setBirthday(birthday);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("输入格式有误,请重新输入生日:");
+				step = 1;
+			}
+			try {
+				goodess.setSex(5);
+				action.add(goodess);
+				System.out.println("女神新增成功!");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println(goodess.toString());
+				System.out.println("女神新增失败!");
+			}
+		}
+	}
+	
+	/**
+	 * 修改女神
+	 * @param String in 用户输入值
+	 * @param Int step 调用方执行次数
+	 */
+	private void update(String in, int step)
+	{
+		if(0==step)
+		{
+			System.out.println("您输入女神姓名:");
+		}
+		if(1==step)
+		{
+			System.out.println("您输入的女神姓名是:"+in);
+			goodess.setUser_name(in);
+			System.out.println("请输入的女神的生日: 格式为：yyyy-MM-dd");
+		}else if(2==step)
+		{
+			System.out.println("您输入的女神生日是:"+in);	
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date birthday = null;
+			try {
+				birthday = sdf.parse(in);
+				goodess.setBirthday(birthday);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("输入格式有误,请重新输入生日:");
+			}
+			System.out.println("请输入女神表主键id：");
+		}else if(3==step)
+			try {
+				goodess.setId(Integer.valueOf(in));
+				goodess.setSex(6);
+				action.edit(goodess);
+				System.out.println("女神修改成功!");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println(goodess.toString());
+				System.out.println("女神修改失败!");
+			}
+		}
+	
 }
