@@ -17,8 +17,6 @@ import db.DBUtil;
  * 模型层
  */
 
-
-
 public class GoodessDao {
 	//定义mysql连接句柄
 	private static Connection conn = null;
@@ -117,7 +115,8 @@ public class GoodessDao {
 			//g.setAdd_time(res.getInt("add_time"));
 			g.setUser_name(res.getString("user_name"));
 			g.setSex(res.getInt("sex"));
-			//g.setBirthday(res.getDate(columnIndex));
+			g.setBirthday(res.getDate("birthday"));	
+			g.setAdd_time(res.getDate("add_time"));
 			gd.add(g);
 		}	
 		return gd;

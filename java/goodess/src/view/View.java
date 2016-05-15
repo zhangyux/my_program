@@ -1,8 +1,13 @@
 package view;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import action.GoodessAction;
@@ -39,6 +44,9 @@ public class View {
 	//实例action控制器对象
 	private GoodessAction action = new GoodessAction();
 	
+	//查询女神条件
+	private List<Map<String,Object>> queryParams = new ArrayList<Map<String,Object>>();
+	
 
 	/**
 	 * @param args
@@ -56,6 +64,7 @@ public class View {
 		String histroyFlag = null;
 		//用户阶段
 		int step = 0;
+
 		
 		View view = new View();
 		
@@ -63,6 +72,13 @@ public class View {
 		while(console.hasNext())
 		{
 			String in = console.next().toString();
+			if( OPERATION_EXIT.substring(0, 1).equals(in.toUpperCase()) || OPERATION_ADD.substring(0, 1).equals(in.toUpperCase()) 
+					|| OPERATION_UPDATE.substring(0, 1).equals(in.toUpperCase()) || OPERATION_DELETE.substring(0, 1).equals(in.toUpperCase()) 
+					|| OPERATION_QUERY.substring(0, 1).equals(in.toUpperCase()) || OPERATION_GET.substring(0, 1).equals(in.toUpperCase()))
+			{
+				step = 0;
+				histroyFlag = null;
+			}
 			//退出
 			if(OPERATION_EXIT.equals(in.toUpperCase()) || OPERATION_EXIT.substring(0, 1).equals(in.toUpperCase()))
 			{
@@ -80,6 +96,23 @@ public class View {
 				histroyFlag = OPERATION_UPDATE;
 				view.update(in,step);
 			}
+			//删除女神
+			else if(OPERATION_DELETE.equals(in.toUpperCase())  || OPERATION_DELETE.substring(0, 1).equals(in.toUpperCase()) || OPERATION_DELETE.equals(histroyFlag))
+			{
+				histroyFlag = OPERATION_DELETE;
+				view.del(in,step);
+			//查询女神信息
+			}else if(OPERATION_QUERY.equals(in.toUpperCase())  || OPERATION_QUERY.substring(0, 1).equals(in.toUpperCase()) || OPERATION_QUERY.equals(histroyFlag))
+			{
+				histroyFlag = OPERATION_QUERY;
+				view.query(in,step);
+			//查询单个女神信息
+			}else if(OPERATION_GET.equals(in.toUpperCase())  || OPERATION_GET.substring(0, 1).equals(in.toUpperCase()) || OPERATION_GET.equals(histroyFlag))
+			{
+				histroyFlag = OPERATION_GET;
+				view.get(in, step);
+			}
+			
 			step++;
 		}
 	}
@@ -126,6 +159,33 @@ public class View {
 			}
 		}
 	}
+	/**
+	 * 删除女神
+	 * @param String in 用户输入值
+	 * @param Int step 调用方执行次数
+	 */
+	private void del(String in,int step)
+	{	
+		if(0==step)
+		{
+			System.out.println("您输入女神id：");
+		}
+		if(1==step)
+		{
+			//将用户输入的id转换为整型
+			int id = Integer.valueOf(in);
+			System.out.println("您输入的女神id是:"+id);
+			try {
+				action.del(id);
+				System.out.println("删除女神成功！");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("删除女神失败！");
+			}
+		}
+		
+	}
 	
 	/**
 	 * 修改女神
@@ -171,4 +231,68 @@ public class View {
 			}
 		}
 	
+	/**
+	 * 按条件查询女神
+	 * @param String in 用户输入值
+	 * @param Int step 调用方执行次数
+	 */
+	private void query(String in, int step)
+	{
+		if(0==step)
+		{
+			System.out.println("您输入要查询的女神姓名:");
+		}else if(1==step)
+		{
+			System.out.println("您输入的女神姓名是:" + in);
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("name", "user_name");
+			map.put("rela", "like");
+			map.put("value", "'%"+ in +"%'");
+			queryParams.add(map);
+			System.out.println("请输入要查询的女神性别:");
+		}else if(2==step)
+		{
+			System.out.println("您输入的女神性别是:"+in);
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("name", "sex");
+			map.put("rela", "=");
+			map.put("value", in);
+			queryParams.add(map);
+			List<Goodess> gs;
+			try {
+				gs = action.query(queryParams);
+				//遍历查询的结果		
+				for (Goodess goodess : gs) {
+					System.out.println(goodess.getId() + ":" + goodess.getUser_name() + "-" + goodess.getAdd_time());		
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * 查询单个女神
+	 * @param String in 用户输入值
+	 * @param Int step 调用方执行次数
+	 */
+	private void get(String in, int step)
+	{
+		if(0==step)
+		{
+			System.out.println("请输入要查询女神的id： ");
+		}else if(1==step)
+		{
+			Integer id = Integer.valueOf(in);
+			System.out.println("您输入的id是：" + id);
+			try {
+				Goodess gs = action.get(id);
+				System.out.println("姓名 = " + gs.getUser_name() + ", 生日 = " + gs.getBirthday());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
