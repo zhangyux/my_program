@@ -12,7 +12,10 @@
 	//默认输出流体对象信息要在内置对象out输出之前输出
 	outer.println("大家好,我是response对象输出流outer对象"); 
 	
-	//请求重定向
-	response.sendRedirect("http://www.baidu.com");
+	//请求重定向, 客户端行为, 本质上是两次请求, 第一次请求信息对象不会发送给第二次请求,地址栏的URL会改变
+	response.sendRedirect("request.jsp");
+	
+	//请求转发,是服务器行为,是一次请求,转发后请求对象会保存,地址栏的URL地址不会改变
+	request.getRequestDispatcher("request.jsp").forward(request,response);
 
 %>

@@ -7,7 +7,7 @@
 <title>表单提交测试</title>
 </head>
 <body>
-<form action="request.jsp" method="post">
+<form action="response.jsp" method="post">
 <table>
 	<tr>
 		<td>用户名：</td>
