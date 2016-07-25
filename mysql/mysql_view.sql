@@ -37,3 +37,28 @@ CREATE VIEW ecm_view_order_comment
            ecm_virtual_order.goods_name 
     FROM ecm_virtual_order 
     WHERE ecm_virtual_order.check=1;
+
+
+/*
+ * 在售商品视图
+ * 视图中字段来自于商品主表product, 在售商品表offer,和特价商品表sale_onprice，三表关联查询所得
+ * 字段说明请查看对应表结构 
+ * 查询条件说明：
+ *   s.sale_status 　= 2 　特价审核通过
+ *   s.offer_type 　　= 1  标准特价商品
+ *   s.sale_isClose = 0 　特价未关闭
+ *   o.offer_verify　=　2  在售
+ *   s.sale_sDate <= curdate() AND s.sale_eDate >= curdate()  当前日期在特价时间范围内
+ */
+CREATE VIEW product_view AS  
+SELECT o.offer_id,
+       p.product_id,o.offer_price,p.product_name,p.product_typeid,p.product_model,p.product_specification,
+       IFNULL(s.sale_price,0) as sale_price
+FROM offer o  
+INNER JOIN product p ON o.offer_proid = p.product_id
+LEFT JOIN sale_oneprice s ON p.product_id = s.product_id 
+        AND s.sale_status = 2 
+        AND s.offer_type = 1 
+        AND s.sale_isClose = 0 
+        AND s.sale_sDate <= curdate() AND s.sale_eDate >= curdate()  
+WHERE o.offer_verify = 2;
