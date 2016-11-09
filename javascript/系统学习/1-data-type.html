@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html;  charset=utf-8" />
 <title>数据类型练习</title>
 <body>
 <script type="text/javascript">
@@ -51,15 +52,31 @@
 	console.log(parseInt('12abc')); //输出12, 只适用与字符串转换为整形,parseInt(true); //输出NaN
 	console.log(parseFloat('12.1ab'));//输出12.2 只适用于字符串转换为浮点形,parseInt(true); //输出NaN
 	
-//4,String 类型
+//4,String 类型, 单引号和双引号效率相同
 	var box="张三";
 	console.log(typeof box); //box类型是String类型，值为'张三', 类型返回的字符串是string
+    box = box+"hello"; //此时的box是box的副本+hello, 原box销毁, 也就是说变量一旦创建不循序修改, 如果修改则复制后自动销毁原变量
+//4.1 toString()数值转换为字符串 
+    console.log(box.toString());//等效于String(box)
+    var num = 100; 
+    console.log(num.toString(2));//将数字转换为二进制字符串, 转换为其他进制道理一样
+//4.2 String()强制转换为字符串, toString()不能转换null和undefined, 这时可以用String强制转换, String()比toString()强大
+    var a = null; 
+    console.log(String(a)); 
+
 
 
 //5,Object类型,空的对象标志这个对象创建了里面没东西
-	var box={}; //或box=new Object();
+	var box={}; //对象字面量的创建方法
 	console.log(typeof box); //box类型是Object类型，值为[Object Object], 类型返回的字符串是object
+    var box = new Object(); //通过new关键字创建对象
 
+    var box = new Object(2); 
+    var age = 100; 
+    console.log(box+age);//输出102, box为object类型, age为number类型, js在做加法的时候执行了内部类型转换
+//5.1穿件number数字对象, 道理和 new String("abc"), new Boolean(true)一样
+    var num = new Number(100); 
+    console.log(num); //num类型为Object, 值为100
 
 //6,Function类型
 	function a()
