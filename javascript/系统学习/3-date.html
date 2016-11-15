@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;  charset=utf-8" />
+<title>日期的学习</title>
+<body>
+<script type="text/javascript">
+/***********************************************************************************
+/**********************************************************************************/
+
+//1.创建一个日期对象，使用new运算符和Date构造方法，构造方法不加任何参数，new的是当前时间
+    var box = new Date(); 
+    console.log(box); 
+
+//2.parse静态方法，返回指定日期字符串的毫秒, 字符串格式为月/日/年
+    var box = Date.parse('11/12/2016'); 
+    console.log(box); 
+
+//3.将指定毫秒作为new Date的参数, new一个日期对象
+    var box = new Date(Date.parse('11/12/2016')); 
+    console.log(box); //输出Sat Nov 12 2016 00:00:00 GMT+0800 (CST)
+
+//4.直接给new Date()指定日期格式字符串，new Date自动调用Date.parse()先转换为毫秒
+    var box = new Date('11/12/2016'); 
+    console.log(box);//于3输出的效果是一样的 
+
+//5.new Date参数的第二种写法
+    var box = new Date('November 12, 2016'); 
+    console.log(box); 
+//6.UTC静态方法, UTC按着世界协调时间, 而我们是东8区，比UTC时间小8个小时，所以UTC作为new Date参数出来的结果要比当前时间多8个小时
+    var box = Date.UTC(2016,11,12); //返回毫秒 2016年11月12日
+    console.log(box); //输出1481500800000
+    var box = new Date(Date.UTC(2016, 10, 12, 13, 22, 28)); //指定参数2016年11月12日12点22分28秒
+    console.log(box); //输出：Sat Nov 12 2016 21:22:28 GMT+0800 (CST), 注意比指定时间大8个小时
+    //如果参数不加Date.UTC, 则返回正确时间
+    var box = new Date(2016, 10, 12, 13, 22, 28); 
+    console.log(box); //输出：Sat Nov 12 2016 13:22:28 GMT+0800 (CST) 
+
+</script>
+</body>
+</html>
+
+
+
