@@ -27,7 +27,7 @@
 //5.new Date参数的第二种写法
     var box = new Date('November 12, 2016'); 
     console.log(box); 
-//6.UTC静态方法, UTC按着世界协调时间, 而我们是东8区，比UTC时间小8个小时，所以UTC作为new Date参数出来的结果要比当前时间多8个小时
+//6.UTC静态方法, UTC按着世界协调时间,标准时区=UTC/GMT +8 小时, 所以UTC作为new Date参数出来的结果要比当前时间多8个小时
     var box = Date.UTC(2016,11,12); //返回毫秒 2016年11月12日
     console.log(box); //输出1481500800000
     var box = new Date(Date.UTC(2016, 10, 12, 13, 22, 28)); //指定参数2016年11月12日12点22分28秒
@@ -36,6 +36,30 @@
     var box = new Date(2016, 10, 12, 13, 22, 28); 
     console.log(box); //输出：Sat Nov 12 2016 13:22:28 GMT+0800 (CST) 
 
+//7.通用方法, toString toLocaleString valueOf三个方法是所有对象通用的方法
+    var box = new Date(2016, 10, 12, 13, 22, 28); 
+    console.log('toString:'+box.toString()); //输出:Sat Nov 12 2016 13:22:28 GMT+0800 (CST)
+    console.log('toLocaleString:'+box.toLocaleString());//输出:2016/11/12 下午1:22:28 
+    console.log('valueOf:'+box.valueOf()); //输出:1478928148000 毫秒数
+
+//8.日期格式化方法
+    var box = new Date(2016, 10, 12, 13, 22, 28); 
+    console.log(box.toDateString());  //输出:Sat Nov 12 2016
+    console.log(box.toTimeString()); //输出:13:22:28 GMT+0800 (CST)
+    console.log(box.toLocaleDateString()); //输出:2016/11/12
+    console.log(box.toLocaleTimeString()); //输出:下午1:22:28
+    console.log(box.toUTCString());        //输出:Sat,  12 Nov 2016 05:22:28 GMT
+
+//9.组件方法
+    var box = new Date(); 
+    //box.setTime(100); //设置毫秒
+    console.log(box.getTime()); //获取毫秒
+    //box.setFullYear(2008);  //设置年
+    console.log(box.getFullYear()); //获取年
+    //box.setMonth(8); //设置月份
+    console.log(box.getMonth()+1); //获取的月份是从0开始的, 所以要+1才是真实的月份
+    //输出年月日, 十分秒
+    console.log(box.getFullYear()+'-'+box.getMonth()+1+'-'+box.getDate()+' '+box.getHours()+':'+box.getMinutes()+':'+box.getSeconds()); 
 </script>
 </body>
 </html>
