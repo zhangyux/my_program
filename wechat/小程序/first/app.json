@@ -1,0 +1,39 @@
+{
+  "pages":[
+    "pages/lxfTest/test",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/navi/navi"
+  ],
+  "window":{
+    "navigationBarBackgroundColor": "#DEDEDE",
+    "navigationBarTitleText": "我的测试页",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#A60F75",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath": "images/img3.gif",
+      "selectedIconPath": "images/img4.gif"
+    },
+    {
+      "pagePath": "pages/lxfTest/test",
+      "text": "测试页",
+      "iconPath": "images/img5.gif",
+      "selectedIconPath": "images/img6.gif"    
+    },
+    {
+      "pagePath": "pages/navi/navi",
+      "text": "导航",
+      "iconPath": "images/img5.gif",
+      "selectedIconPath": "images/img6.gif"    
+    }
+    ],
+    "position":"bottom"
+  },
+  "debug":false
+}
