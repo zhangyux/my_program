@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;  charset=utf-8" />
+<title>正则表达式的学习</title>
+<body>
+<script type="text/javascript">
+/***********************************************************************************
+  使用正则表达式的test和exex方式匹配
+/**********************************************************************************/
+
+//1.创建正则的第一种方式, 使用new关键字
+    var box = new RegExp('Box', 'gim');//第一个参数是模式字符串必选, 第二个参数igm, i不区分大小写, g全局匹配, m多行匹配 
+    console.log(box); //输出:/Box/gim, 就是字面量方式创建正则
+//2.创建正则的第二种方式, 使用字面量(常用方式)
+    var box = /Box/gim; 
+    console.log(box); 
+//3.test()方法, 返回boolean, 匹配成功返回true, 失败返回false
+    var pattern = /Box/gi; 
+    console.log(pattern.test('this is a box')); //输出:true
+//4.exec()方法, 返回值是数组, 匹配成功返回数组的值, 失败返回null
+    var pattern = /Box/gi; 
+    console.log(pattern.exec('this is a Box')); //输出:["Box",  index: 10,  input: "this is a Box"]
+    console.log(pattern.exec('this is a aox')); //输出:null
+
+/***********************************************************************************
+ 使用字符串方式匹配正则
+/**********************************************************************************/
+//5.match()方法, 匹配成功返回匹配成功的数组, 匹配失败返回null
+    var pattern = /Box/i; //非全局匹配
+    var str = 'this is a box! that is a Box'; 
+    console.log(str.match(pattern)); //输出:["box",  index: 10,  input: "this is a box! that is a Box"]
+    var pattern = /Box/ig; //全局匹配
+    var str = 'this is a box! that is a Box'; 
+    console.log(str.match(pattern)); //输出: ["box",  "Box"]
+//6.search()方法, 匹配成功返回索引位置, 失败返回-1, 注意:无需全局匹配
+    var pattern = /Box/i; 
+    var str = 'this is a box'; 
+    console.log(str.search(pattern)); //输出:10
+//7.replace()方法, 匹配后替换所匹配的值, 返回替换后的字符串
+    var pattern = /Box/ig; //全局匹配, 如果不加g不是全局匹配, 则只替换第一个box
+    var str = 'this is a box! that is a Box'; 
+    console.log(str.replace(pattern, 'Jim')); //输出:this is a Jim! that is a Jim
+//8.split()方法, 把一个字符串通过正则拆分为一个数组
+    var pattern = / /ig; //全局匹配, 通过空格拆分
+    var str = 'this is a box! that is a Box!'; 
+    console.log(str.split(pattern)); //输出:["this",  "is",  "a",  "box!",  "that",  "is",  "a",  "Box!"]
+
+/***********************************************************************************
+ 静态属性, 这些属性作用不是很大, 浏览器兼容性不是很好
+/**********************************************************************************/
+//9.input, 当前被匹配的字符串
+    var pattern = /google/i; 
+    var str = 'this is a google! that is a google!'; 
+    pattern.test(str); //必须先执行一下, 静态属性才有效
+    console.log(RegExp.input); //输出:this is a google! that is a google!
+//10.leftContext, 最后匹配字符串的左子串
+    console.log(RegExp.leftContext); //输出:this is a 
+//11.rightContext, 最后匹配字符串的右子串
+    console.log(RegExp.rightContext); //输出:! that is a google!
+//12.lastMatch, 最后匹配的字符串
+    console.log(RegExp.lastMatch); //输出:google
+//13.lastParen, 最后一对圆括号内的匹配子串
+    console.log(RegExp.lastParen);
+
+/***********************************************************************************
+ 操作符的使用
+/**********************************************************************************/
+//14.点符号表示匹配除了换行符外的任意一个字符
+    var pattern = /g.gle/; 
+    var str = 'google'; 
+    console.log(pattern.test(str)); //匹配失败
+//15.星号,表示匹配前面字符的0个, 1个, 或多个字符
+    var pattern = /go*gle/; //o*, 表示0个, 1个或多个o
+//16.加号,表示匹配前面字符的1个, 或多个字符
+    var pattern = /go+gle/; //o+, 表示1个或多个o
+//17.问号,表示匹配前面字符的1个, 或0个
+    var pattern = /go?gle/; //o?, 表示1个或0个o
+//18.表示一个或者零个的任意字符
+    var pattern = /g.?gle/; //.? 表示1个或者0个的任意字符
+//19.区间匹配
+    var pattern = /go{2,4}gle/; //o{2, 4} 表示匹配o2-4次, 包含2和4
+    var pattern = /go{3}gle/; //o{3} 表示只能匹配o 3次
+    var pattern = /go{3, }gle/; //o{3, } 表示匹配o  >=3次
+    var pattern = /[a, z]google/; //[a,z] 表示26个小写字母(大写同理), 任意一个都可以匹配[0-9]也是同理
+    var pattern = /[a-zA-Z0-9]google/; //[a-zA-Z0-9] 表示大小写a-zA-Z0-9
+    var pattern = /[^a-zA-Z0-9]google/; //[^a-zA-Z0-9] 表示非大小写a-zA-Z0-9
+    var str = 'google'; 
+    console.log(pattern.test(str)); //匹配成功
+//20.锚元字符匹配
+    var pattern = /^[a, z]google/; //^[a,z] ^代表行首
+    var pattern = /^[a, z]google$/; //$代表行尾
+    var pattern = /\wgoogle/; //\w表示 [a-zA-Z_]
+    var pattern = /\Wgoogle/; //\W表示 [^a-zA-Z_]
+    var pattern = /\dgoogle/; //\d表示 [0-9]
+    var pattern = /\Dgoogle/; //\D表示 [^0-9]
+</script>
+</body>
+</html>
+
+
+
