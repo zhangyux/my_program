@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;  charset=utf-8" />
+<title>内置对象练习</title>
+<body>
+<script type="text/javascript">
+/*
+ * ECMAScript 没有类的概念,因此它的对象与基于类的语言中的对象有所不同
+ * this表示new Object()实例化出来的那个对象
+ * this要放在一个作用域下, 
+ * 比如box.run(){}, 这个是box作用域下的方法, 方可用this标识box本身
+ */
+//创建对象的工厂模式
+    function createObj(name, age)
+    {
+        var box = new Object(); //创建一个对象
+        box.name=name;          //添加属性
+        box.age=age;            
+        box.run=function()      //添加方法
+        {
+            return this.name+this.age+'运行中...';//this表示当前作用域下的对象
+        };
+        return box;  //返回对象引用
+    }
+
+    var obj1 = createObj('zhangsan', 20);
+    var obj2 = createObj('lisi', 30);
+    console.log(obj1 instanceof Object); 
+    console.log(obj2 instanceof Object); 
+
+/*
+*    使用构造函数的办法创建对象
+*    所有构造函数的对象其实就是Object
+*    1.构造函数没有new Object, 但是后台会自动 var obj = new Object
+*    2.this就等于obj
+*    3.构造函数不需要返回对象引用
+*    4.构造函数也是函数, 但函数名第一个字母大写
+*    5.必须new构造函数名(), new Box(), 而Box第一个字母也是大写
+*    6.构造函数与普通函数唯一不同的即使调用的方式不同, 构造函数需要new运算符调用, 否则就代表普通函数
+*    7.普通函数首字母不需要大写
+*/
+    function Box(username, age)//创建一个对象
+    {
+        this.username = username; //添加属性
+        this.age = age; 
+        this.run = function()
+        {
+            return this.username+this.age+'运行中...';//this表示当前作用域下的对象
+        }
+    }
+    function Desk(username, age)//创建一个对象
+    {
+        this.username = username; //添加属性
+        this.age = age; 
+        this.run = function()
+        {
+            return this.username+this.age+'运行中...';//this表示当前作用域下的对象
+        }
+    }
+    var box1 = new Box('zhangsan', 20);
+    var box2 = new Box('lisi', 30);
+    var box3 = new Desk('wangwu', 40);
+    console.log(box1.run()); 
+    console.log(box2.run()); ; 
+    console.log(box1 instanceof Box); //true
+    console.log(box2 instanceof Box); //true
+    console.log(box3 instanceof Box); //false 因为box3是Desk对象的引用
+    console.log(box3 instanceof Desk);//true
+//8.调用普通函数的方法, 调用构造函数不起任何作用
+    Box('zhangsan', '22'); 
+//9.使用对象冒充方式调用
+    var objNew = new Object(); 
+    //console.log(objNew.run()); //error:objNew.run is not a function
+    var objNew = new Object(); 
+    Box.call(objNew, 'wangwu', 18)
+    console.log(objNew.run()); //wangwu18运行中...
+
+    var box1 = new Box('zhangsan', 30);
+    var box2 = new Box('zhangsan', 30);
+    console.log(box1.name == box2.name); //true
+    console.log(box1.run() == box2.run()); //true, 构造函数体内的方法的值是相等的
+    console.log(box1.run == box2.run); //false, 因为他们比较的是引用
+    
+</script>
+</body>
+</html>
