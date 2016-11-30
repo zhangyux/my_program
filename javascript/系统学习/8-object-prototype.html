@@ -29,7 +29,7 @@
     console.log(obj1 instanceof Object); 
     console.log(obj2 instanceof Object); 
 
-/*
+/*********************************************************************************************************
 *    使用构造函数的办法创建对象
 *    所有构造函数的对象其实就是Object
 *    1.构造函数没有new Object, 但是后台会自动 var obj = new Object
@@ -39,7 +39,7 @@
 *    5.必须new构造函数名(), new Box(), 而Box第一个字母也是大写
 *    6.构造函数与普通函数唯一不同的即使调用的方式不同, 构造函数需要new运算符调用, 否则就代表普通函数
 *    7.普通函数首字母不需要大写
-*/
+************************************************************************************************************/
     function Box(username, age)//创建一个对象
     {
         this.username = username; //添加属性
@@ -79,9 +79,117 @@
     var box1 = new Box('zhangsan', 30);
     var box2 = new Box('zhangsan', 30);
     console.log(box1.name == box2.name); //true
-    console.log(box1.run() == box2.run()); //true, 构造函数体内的方法的值是相等的
-    console.log(box1.run == box2.run); //false, 因为他们比较的是引用
-    
+    console.log(box1.run() == box2.run()); //true, 构造函数体内的方法的值是相等的 
+    console.log(box1.run == box2.run); //false, 因为他们比较的是引用 
+//10.判断一个对象实例(对象引用)是否指向了原型对象, 基本上都是自动指向的
+    console.log(Test2)
+
+/******************************************************************************************** * 原型
+ * 原型: 相当与php的静态属性和方法
+ * 我们创建的每一个函数都有一个prototype(原型)属性, 这个属性是一个对象
+ * 它的用途是包含可以由特定类型的所有实例"共享"属性和方法
+ * 在原型中多了两个属性(__proto__, constructor), 这两个属性都是在创建对象时自动生成的, 
+ * __proto__属性是实例指向原型对象的一个指针, 它的作用是指向构造函数原型属性constructor
+ * 通过这两个属性, 就可以访问到原型里的属性和方法了.
+ * prototype通过调用构造函数而创建的那个对象的原型对象
+ * 使用原型的好处是:可以让所有对象实例共享它所包含的属性和方法
+ * prototype是个对象, __proto__指针指向prototype对象, 通过__proto__访问prototype对象
+ * 注意:ie浏览器不支持__proto__的访问
+ * constructor 将对象实例与原型对象对应起来, 产生关联关系的作用
+ *********************************************************************************************/
+//1.实例 
+    function Test() {
+        this.uname = 'liangxifeng'; //实例属性
+        this.age = '28'; 
+        this.run = function()       //实例方法
+        {
+            return this.name + this.age + '正在运行中...'; 
+        }; 
+    }
+//2.原型
+    function Test2(){}//构造函数体内无方法体, 如果有就叫做实例属性和方法, 否则叫做原型属性和方法
+    Test2.prototype.name = 'liangxifeng'; //原型属性
+    Test2.prototype.age = '28'; 
+    Test2.prototype.run = function() {   //原型方法
+        return this.name + this.age + '正在运行中...'; 
+    }
+    var test2 = new Test2(); 
+    var test3 = new Test2(); 
+    console.log(test2.run()); 
+//3.如果是实例方法, 不同的实例化, 他们的方法地址是不一样的, 是唯一的
+//如果是原型方法, 那么他们的地址是共享的, 大家都一样
+    console.log(test2.run  ==  test3.run); //true
+    console.log(test2.__proto__); //__proto__是一个指针, 指向prototype原型对象
+    console.log(Test2.prototype); //也可以直接使用构造方法名直接访问prototype原型对象
+//4.构造属性, 可以获取构造函数本身
+// 作用是被原型指针定位, 然后得到构造函数本身
+//  其实就是对象实例对应原型对象的作用
+    console.log(test2.constructor); //输出:functon Test2(){}
+//10.判断一个对象实例(对象引用)是否指向了原型对象, 基本上都是自动指向的
+    console.log(Test2.prototype.isPrototypeOf(test3));//true
+/********************************************************************************************
+  原型模式的执行流程:
+    1.先查找构造函数实例里面属性和方法, 如果有, 立刻返回
+    2.如果构造实例中没有, 再查找原型对象里面属性和方法, 如果有返回
+    3.虽然我们可以通过对象实例访问原型中的值, 但是不能通过对象实例重写原型中的值
+ *********************************************************************************************/
+    test2.name='lisi'; 
+    console.log(test2.name); //lisi, 就近原则, 而不是重写了原型中的name
+    console.log(test3.name); //liangxifeng, 实例属性不共享,只能访问原型,  所以输出还是liangxifeng
+    delete test2.name; //删除实例中的属性
+    console.log(test2.name); //liangxifeng
+    //delete Test2.prototype.name;//删除原型中的属性
+    console.log(test2.name); //undifined
+    //Test2.prototype.name = 'kkk';//覆盖原型中的属性
+    //console.log(test3.name); //kkk
+    console.log(test3.hasOwnProperty('name')); //false, 判断实例中是否存在指定属性
+    console.log('name' in test2); //true, 不管原型中或实例中是否存在, 只要有属性name就返回true, 都没有则返回false
+    //判断只有原型中是否存在指定属性
+    function isProperty(obj, proterty)
+    {
+        return !obj.hasOwnProperty(proterty)  &&  (proterty in obj); 
+    }
+    console.log(isProperty(test2, 'name')); 
+/********************************************************************************************
+  使用字面量的方式创建原型对象, new Object() 等效于 {}
+  字面量方式constructor属性会指向新的Object, 
+  因为Log.propertype={}, 这种写法其实就是创建了一个对象,
+  而每创建一个函数,就会同时创建它的prototype, 
+  这个对象也会自动创建constructor属性, 
+  所以新对象的constructor重写了Log原来的constructor,
+  因此会指向新的对象Object, 这个新对象没有指向构造函数,默认就是Object
+  可以在Log.prototype{constructor:Log}, 使用这种方式强制指向Log, 就可以解决该问题了
+ *********************************************************************************************/
+    function Log() { }
+    Log.prototype = {
+        constructor:Log, 
+        name:'zhangsan', 
+        age:'28', 
+        run:function()
+        {
+            return this.name+this.age+'运行中...'; 
+        }
+    }; 
+    Log.prototype.age = 30; 
+    var logObj = new Log(); 
+    console.log(logObj.run()); 
+    console.log(logObj.constructor);//function Log(){}
+
+/***********************************************************************************************
+  原型对象不仅可以在自定义对象的情况下使用, 而ECMAScript
+  内置引用类型都可以使用这种方式, 而且内置引用类型本身也使用原型
+ **********************************************************************************************/
+    console.log(Array.prototype.sort); //function sort() { [native code]  }, sort就是Array类型的原型方法
+    console.log(String.prototype.substring); //function substring() { [native code]  }, substring就是String类型的原型方法
+    //内置引用类型的功能扩展
+    String.prototype.addString = function()
+    {
+        return this+'被添加了'; 
+    }
+    var a = 'hello'; 
+    console.log(a.addString()); //hello被添加了
+
+   
 </script>
 </body>
 </html>
