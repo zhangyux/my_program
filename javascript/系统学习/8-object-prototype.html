@@ -189,6 +189,80 @@
     var a = 'hello'; 
     console.log(a.addString()); //hello被添加了
 
+
+    function Ha(){}; 
+    Ha.prototype = {
+            constructor:Box, 
+            name:'Lee', 
+            age:100, 
+            family:['php', 'mysql'], 
+            run:function(){
+                return this.name + this.age + '运行中...'
+            }
+    }
+    var box1 = new Ha(); 
+    console.log(box1.family); //引用类型共享了, //输出：["php",  "mysql"] 
+    box1.family.push('liangxifeng')
+
+    var box2 = new Ha(); 
+    console.log(box2.family); //输出：["php",  "mysql",  "liangxifeng"] 
+
+/***********************************************************************************************
+  组合构造函数模式+原型模式使用
+ **********************************************************************************************/
+    //实例中个性化信息放在构造实例中
+    function He(name, age)
+    {
+        this.name = name; 
+        this.age = age; 
+        this.family = ['php', 'mysql']; 
+    }
+
+    //需要共享的信息放在原型中
+    He.prototype = {
+        constructor:He, 
+        run:function(){
+            return this.name + this.age + '运行中..'; 
+        }
+    }
+    var box1 = new He('zhangsan', 20); 
+    box1.family.push('java'); 
+    console.log(box1.family); //["php",  "mysql",  "java"] 
+    var box2 = new He('lisi', 30); 
+    console.log(box2.family); //["php",  "mysql"] 实例引用类型没有共享
+
+    
+    //封装原型到构造函数中, 动态原型模式
+    function Ya(name, age)
+    {
+        this.name = name; 
+        this.age = age; 
+        this.family = ['php', 'mysql']; 
+        //需要共享的信息放在原型中, 原型初始化只需要第一次初始化就可以了
+        if(typeof this.run  != 'function')//判断this.run是否存在
+        {
+            Ya.prototype.run = function(){
+                return this.name + this.age + '运行中..'; 
+            }
+        }
+    }
+    var box2 = new Ya('lisi', 30); 
+    console.log(box2.run()); 
+    //稳妥构造函数，构造内部不能用this, 外部不能用new
+    function Li(name, age) //如果本构造函数中不使用this, 那么在实例的时候可以不用new，否则必须用new
+    {
+        var box = new Object(); //创建一个对象
+        box.name=name;          //添加属性
+        box.age=age;            
+        box.run=function()      //添加方法
+        {
+            return this.name+this.age+'运行中...';//this表示当前作用域下的对象
+        };
+        return box;  //返回对象引用
+    }
+    var box2 =  Li('lisi', 30); 
+    console.log(box2.run()); 
+
    
 </script>
 </body>
