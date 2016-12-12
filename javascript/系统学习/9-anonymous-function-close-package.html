@@ -134,7 +134,120 @@
                 console.log(j)
             }
          })(); 
-        console.log(j); //出了这个私有作用域，变量j就立刻销毁，所以这里会报错:j is not defined
+        //console.log(j); //出了这个私有作用域，变量j就立刻销毁，所以这里会报错:j is not defined
     }
     box6(); 
+
+    var age = 100
+    console.log(age); 
+    //不用的变量要销毁
+    age.null; 
+    
+    (function (){
+        //这里就是全局的私有作用域,执行的过程中age在内存中有，执行完毕后自动销毁
+        var age = 100; 
+        console.log(age)
+     })(); 
+/******************************************************************************************
+ * js中没有私有属性的概念，所有的对象属性都是公有的，不过却又一个私有变量的概念
+ * 任何在函数中定义的变量，都可以任务是私有变量，因为不能在函数外部访问
+ ******************************************************************************************/
+//1. 属性和方法都是公有的，没有私有的概念
+    function Box7()
+    {
+        this.age = 120;         //属性，公有的
+        this.run = function(){ //方法，公有的
+            return '运行中'; 
+        }
+    }
+    var box = new Box7(); 
+    console.log(box.age); //输出：120
+//2. 私有变量, 私有函数,要通过公共特权方法访问
+    function Box8()
+    {
+        var age = 220; 
+        function run()
+        {
+            return '运行中'; 
+        }
+        //对外可见的公共方法，特权方法
+        this.publicGo = function()
+        {
+            return age +run(); 
+        }
+    }
+    var box = new Box8(); 
+    console.log(box.age); //输出：undefined
+    console.log(box.publicGo()); //输出：220运行中
+
+//3.通过构造函数传递参数访问私有
+    function Box9(value)
+    {
+        var user = value; //私有变量
+        this.getUser = function()
+        {
+            return user; 
+        }
+        this.setUser = function(value2)
+        {
+            user = value2; 
+        }
+    }
+    var box1 = new Box9('lxf'); 
+    box1.setUser('lisi'); 
+    console.log(box1.getUser()); //输出：lisi
+    var box2 = new Box9('kkk'); 
+    console.log(box1.getUser()); //输出:lisi
+
+//4.对象的方法在多次调用的时候会多次创建，可以使用静态私有变量避免这个问题
+//使用prototype导致方法共享了，而user也就变成了静态属性了（共享与不同对象中的属性)
+    (function(){
+        var user = ""; //私有变量
+        //function Box10(){}; //在函数内部写构造函数，不支持，因为私有作用域里的函数外部无法访问
+        //全局构造函数
+        Box10 = function(value){//将你们函数赋值给全局变量，就可以在外部访问了
+            user = value; 
+        }; 
+        Box10.prototype.getUser = function()
+        {
+            return user; 
+        }
+        Box10.prototype.setUser = function(value)
+        {
+            user = value; 
+        }
+     })(); 
+    var box1 = new Box10('Lee');  
+    console.log(box1.getUser()); //输出:Lee
+    var box2 = new Box10('kkk'); 
+    console.log(box1.getUser()); //输出:kkk
+
+    box2.setUser('wangwu'); 
+    console.log(box1.getUser()); //输出:wangwu
+
+//5.单例：永远只实例化一次，其实就是字面量对象声明方式
+    var box11 = {
+        usr:"Lee", 
+        run:function(){
+            return '运行中'; 
+        }
+    }
+
+    var box12 = function(){
+        var user = 'Lee'; 
+        function run()
+        {
+            return '运行中'; 
+        }
+        var obj = {
+            publicGo:function()
+                     {
+                         return user + run(); 
+                     }
+        }
+        return obj; 
+    }(); 
+    console.log(box12.publicGo()); 
+
+
 </script>
