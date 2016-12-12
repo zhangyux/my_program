@@ -34,14 +34,14 @@
         }
     }
     console.log(test()()); //输出：zhangsan
-/*********************************************
+/******************************************************************************************
  * 闭包：在一个函数内部创建另一个函数，通过另一个函数访问这个函数的局部变量
- * 闭包的有点：同时也是缺点，就是可以把局部变量"驻留在内存"中，可以避免使用全局变量
+ * 闭包的优点：同时也是缺点，就是可以把局部变量"驻留在内存"中，可以避免使用全局变量
  * （全局变量污染导致应用程序不可预测）
  * 所以推荐使用私有的，封装的局部变量
  * 由于闭包里作用域返回的局部变量资源不会立刻销毁回收，所以可能会
  * 占用更多内存，过度使用闭包会导致性能下降，建议在非常有必要情况才使用闭包
- *********************************************/
+ ******************************************************************************************/
 //1.通过匿名函数实现局部变量驻留内存中从而累加
     function box1(){
         var age = 100; 
@@ -55,6 +55,86 @@
     console.log(a()); //102, 将box1中的age变量累加1
     console.log(a()); //103, ...
     a=null;  //不用就应该接触引用
+
+    function box2()
+    {
+        var arr = []; 
+        for(var i=0;  i<5; i++)
+        {
+            arr[i] = function(num){//通过自我及时执行匿名函数
+                //num其实在这里
+                return function(){  //因为闭包可以将变量num驻留在内存中
+                    return num; 
+                } 
+            }(i); 
+        }
+        return arr; 
+    }
+    var b = box2(); 
+    console.log(b); 
+    for(var i=0; i<b.length; i++)
+    {
+        console.log(b[i]()); //输出顺序：0 1 2 3 4
+    }
+//2.闭包在运行时，this指向window，因为闭包并不属于这个对象的属性和方法
+//使用闭包访问本对象内的属性第一种方法对象冒充
+    var user = 'The Window'; 
+    var box3 = {
+        user:'The box3', 
+        getUser:function(){
+            //这里作用域的this是Box3
+            return function(){//闭包
+                //这里作用域的this是Window
+                return this.user; 
+            }
+        }
+    }
+    console.log(box3.getUser()()); //输出:The Window
+    console.log(box3.getUser().call(box3)); //输出:The box3
+//使用闭包访问本对象内的属性第二种方法修改作用域
+    var user = 'The Window'; 
+    var box4 = {
+        user:'The box4', 
+        getUser:function(){
+            //这里作用域的this是Box4
+            var that = this; 
+            return function(){//闭包
+                //这里作用域的this是Window
+                return that.user; 
+            }
+        }
+    }
+    console.log(box4.getUser()()); //输出:The box4
 </script>
+<div id='oDiv'>liangxifeng</div>
 </body>
 </html>
+<script>
+//3, 内存泄露问题, 只有IE会产生该问题
+    function box5()
+    {
+        var oDiv = document.getElementById("oDiv"); 
+        var text = oDiv.innerHTML
+        oDiv.onclick = function()
+        {
+            console.log(text); 
+        }
+        oDiv = null; //用完后接触引用，防止内存泄露
+    }
+    box5(); 
+/******************************************************************************************
+ * 私有作用域
+ ******************************************************************************************/
+//1, 使用块级作用域（私有作用域)
+    function box6()
+    {
+        (function (){//包含自我执行的匿名函数，就可以实现私有作用域
+            for(var j=0; j<5; j++)
+            {
+                console.log(j)
+            }
+         })(); 
+        console.log(j); //出了这个私有作用域，变量j就立刻销毁，所以这里会报错:j is not defined
+    }
+    box6(); 
+</script>
