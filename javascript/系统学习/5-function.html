@@ -144,6 +144,12 @@
     sayColor.call(window); //冒充window, 输出依然是red
     sayColor.call(this); //this就是window
     sayColor.call(box); //冒充box, 作用域在box对象里面, 所以输出:blue
+//9.函数的三种调用方式
+    /*
+    obj.myFunc(); 
+    myFunc.call(obj, arg); 
+    myFunc.apply(obj, [arg1, arg2..]); 
+    */
 </script>
 </body>
 </html>
