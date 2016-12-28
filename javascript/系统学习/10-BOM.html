@@ -120,6 +120,125 @@ if(box!=null)
     resizeTo(100, 100)
     resizeBy(100, 100)
 
+/*
+ * 超时调用, setTimeout('要执行的js代码', 毫秒数)
+ */
+    //第一种方式, 1秒后输出hello
+    setTimeout("console.log('hello')", 1000); 
+    function testTimeOut()
+    {
+        console.log('it is testTimeOut function'); 
+    }
+    //第二种方式, 1秒后输出it is is testTimeOut function
+    setTimeout(testTimeOut, 1000); 
+    //第三种方式, 1秒后输出it is setTimeout niming function
+    setTimeout(function(){
+            console.log('it is setTimeout niming function'); 
+    }, 1000); 
 
+    //取消当前超时调用
+    var time = setTimeout("alert('123')", 1000); //返回值是超时调用ID
+    clearTimeout(time); 
+
+    //使用超时调用模拟定时器(推荐使用, 因为到时间后不用像setInterval一样需要clearInterval)
+    /*
+    var i=0; 
+    var totalNum = 5; 
+    setTimeout(outtime, 1000); 
+    function outtime()
+    {
+        document.getElementById('num').innerHTML = totalNum; 
+        totalNum--; 
+        if(i == totalNum)
+        {
+            alert('时间已经到５秒了'); 
+        }else
+        {
+            setTimeout(outtime, 1000); 
+        }
+    }
+    */
+
+/*
+ * 间歇调用 setInterval()
+ * 可以重复不断的执行
+ */
+    //每隔一秒执行一次
+    setInterval(function(){
+        //console.log('setInterval test'); 
+    }, 1000); 
+    //使用间歇调用实现计时器(不推荐使用)
+    /*
+    var i=0; 
+    var totalNum = 5; 
+    var intId = setInterval(timing, 1000); 
+    function timing()
+    {
+        document.getElementById('num').innerHTML = totalNum; 
+        totalNum--; 
+        if(i == totalNum)
+        {
+            clearInterval(intId); 
+            alert('时间已经到５秒了'); 
+        }
+    }
+    */
+
+/*************************************************************************
+  location对象是BOM对象之一，它提供了与当前窗口中加载的文档有关的信息
+  事实上location对象是window对象的属性, 也是document对象的属性
+  所以window.location 和　document.location等效
+******************************j********************************************/
+    console.log(window.location);  //输出：{hash: "",  search: "",  pathname: "/home/lxf/git/user_liangxifeng833/my_program/javas…/%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/10-BOM.html",  port: "",  hostname: ""…}
+    console.log(window.document.location); //输出：{hash: "",  search: "",  pathname: "/home/lxf/git/user_liangxifeng833/my_program/javas…/%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/10-BOM.html",  port: "",  hostname: ""…}ancestorOrigins: DOMStringListassign: ()hash: ""host: ""hostname: ""href: "file:///home/lxf/git/user_liangxifeng833/my_program/javascript/%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/10-BOM.html"origin: "file://"pathname: "/home/lxf/git/user_liangxifeng833/my_program/javascript/%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/10-BOM.html"port: ""protocol: "file:"reload: reload()replace: ()search: ""toString: toString()valueOf: valueOf()__proto__: Object
+
+    //location.hash='#66'; //会跳转到包含#66的URL地址中
+    //location.port=888; //会自动给主机名后添加:888, 并跳转到该地址
+    //location.search; //获取url地址中的查询字符串, 如何设置会跳转
+    //跳转url
+    //location.href='http:www.baidu.com'; 
+    //跳转url等效于location.href
+    //location.assign('http://www.baidu.com'); 
+    //location.replace('http://www.baidu.com'); //不产生历史记录的跳转，也就是跳转到百度后，浏览器无法后退
+
+    //获取url的查询字符串并转换为数组
+    function getArgs()
+    {
+        var qustring = location.search.length>0 ? location.search.substring(1) : '' ; 
+        var items = qustring.split('&'); 
+        var item=null, name=null, value=null; 
+        
+        var args = []; 
+        for(var i=0; i<items.length; i++)
+        {
+            item=items[i].split('='); 
+            name=item[0]; 
+            value =item[1]; 
+            args[name] = value; 
+        }
+        return args; 
+    }
+    //比如访问的url = http://localhost/a.php?id=10&name=zhangsan
+    console.log(getArgs()); //输出：[id: "10",  name: "zhangsan"]
+
+    /*
+    location.reload(); //重新加载当前页面，有可能从浏览器缓存中加载
+    location.reload(true); //重新加载当前页面，重新从服务器重获取资源
+    */
+
+
+    /*
+     * 历史记录对象history
+     */
+    //历史记录总量
+    console.log('历史记录总量='+history.length); 
+    /*
+    history.back(); //前往浏览器历史条目前一个url, 后退
+    history.forward(); //前往浏览器历史条目后一个url, 前进
+    history.go(num); //浏览器在histroy对象中向前num=正整数或向后num＝负整数
+    */
 </script>
+<div id="num"></div>
+</body>
+</html>
 
