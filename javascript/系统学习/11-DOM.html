@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;  charset=utf-8" />
+<title>文档对象模型DOM</title>
+<body>
+<script type="text/javascript">
+/*********************************************************************************
+ * DOM：D 代表Web加载的网页文档
+        O 代表对象，document对象
+        M 代表模型，文档的树形结构
+　 加载html页面时候，Web浏览器生成一个树形结构，用来标识页面内部结构，
+　 DOM将这种树形结构理解为由节点组成(将标签视为节点, 即元素)
+
+ * 节点分为三类 <div id="box">测试Div</div>
+    1.元素节点，其实就是标签，<div></div>
+    2.文本节点，其实就是标签内的纯文本，测试Div
+    3.属性节点，其实就是标签的属性, id="box"
+ * 查找元素
+   1.getElementById() 参数为元素的id值, 就可以获取该元素节点
+   2.将<script>标签移动到页面底部保证dom加载完毕后才能获取的dom节点
+   3.使用onload事件, 当网页所有内容全部加载完毕后，再执行的代码
+   4.getElementById需要区分大小写，否则导致不兼容
+   5.注意：元素节点中自定义属性只有IE支持，其他浏览器均不支持
+
+   6.getElementsByTagName
+ *********************************************************************************/
+    window.onload = function(){
+        var idBox = document.getElementById('box'); 
+        console.log(idBox.tagName);     //获取该元素节点的表签名, 输出：DIV
+        console.log(idBox.innerHTML); ; //获取该元素节点的文本内容，而不是文本节点,包含html标签, 输出：测试Div 
+        console.log(idBox.id); ;        //获取该元素节点id属性值, 注意不是属性节点, 输出:box
+        console.log(idBox.className); ; //获取该元素节点class属性值, 输出：pox
+        console.log(idBox.title); ;     //获取该元素节点title属性值, 输出：标题
+        console.log(idBox.style); ;     //获取该元素节点style属性对象
+        console.log(idBox.style.color); //获取该元素节点style属性对象中属性的值，输出：red
+        idBox.innerHTML = '<b>hello</b>'; //设置文本内容，可以解析html, 不是单纯文本 
+
+        var lis = document.getElementsByTagName('li'); 
+        console.log(lis.length);            //输出li元素的个数 输出：３
+        console.log(lis[0].innerHTML);      //输出第一个元素的文本, 输出：php
+        console.log(lis.item(0).innerHTML); //输出第一个元素的文本, 输出：php
+    }
+</script>
+<div id="box" title="标题" class="pox" style="color:red; "> 测试Div </div>
+<ul>
+    <li>php</li>
+    <li>java</li>
+    <li>python</li>
+</ul>
+</body>
+</html>
+
