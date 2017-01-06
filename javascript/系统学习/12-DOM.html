@@ -121,6 +121,40 @@
          * nodeName =属性名
          * nodeValue =属性值
          */
+
+        //将指定的结点滚动到可见模式
+        //document.getElementById('box').scrollIntoView(); 
+
+        //children属性, 获取子节点, 会忽略空白节点
+        console.log(box.childNodes.length); //输出8
+        console.log(box.children.length);   //输出3
+        console.log(box.children[0].nodeName);   //输出P
+
+        /*
+         * contains() 方法，判断一个是不是另一个节点的后代
+         * 火狐旧版本不支持，3.6
+         * Safari2.X不支持.，3.0以上支持
+         */
+        var p = box.firstChild; 
+        console.log(p.contains(p)); //判断p元素节点后是否包含p标签, 输出true
+
+        /*
+         * DOM操作内容
+         * innerHtml,  获取文本并不过滤html, 推荐使用
+         *
+         * //以下三种不推荐使用
+         * innerText , 获取文本并过滤掉html, 火狐不支持，火狐提供textContent等效与它
+         * outerText , 获取文本并过滤html, 火狐不支持, 在赋值的时候将指定元素标签也去掉了
+         * outerHtml 效果与innerHtml一致，只是赋值的时候后将标签元素抹去
+
+         */
+        // 获取文本并过滤掉html, 以下输出1 2 3, 注意不包含<p>标签, 火狐不支持
+        //innerText赋值的话有html就转义
+        //火狐提供了textContent等效于innerText
+        console.log(box.innerText); 
+        box.innerText='<b>123</b>'; 
+        
+
     }
 
     //如果IE不兼容Node, 则可以用一下方式创建Node解决
@@ -132,8 +166,14 @@
             TEXT_NODE:3
         }; 
     }
+
+
 </script>
-<div name="divName" id="box"></div>
+<div name="divName" id="box">
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+</div>
 </body>
 </html>
 
