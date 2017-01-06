@@ -62,7 +62,7 @@
         //获取当前路径，file:///home/lxf/git/user_liangxifeng833/my_program/javascript/%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/12-DOM.html
         console.log(document.URL); 
         document.URL = 'http://www.baidu.com'; 
-        alert(document.URL); 
+        //alert(document.URL); 
         
         //获取域名
         console.log(document.domain); 
@@ -96,7 +96,23 @@
          * Text文本类型
          * 表示文本节点类型，文本不包含html, 或包含转义的HTML
          * nodeType = 3
+         * 文本节点还有很多与字符串相似的操作，比如：截取，删除，替换等等
          */
+        var box = document.getElementById('box'); 
+        var mr = document.createTextNode('Mr.'); 
+        var liang = document.createTextNode('liang'); 
+        box.appendChild(mr); 
+        box.appendChild(liang); 
+        console.log(box.childNodes.length); //合并前输出2
+        //注意创建两个文本节点并向div插入后在获取属于两个单独的节点，这时候需要合并
+        box.normalize(); 
+        console.log(box.childNodes.length); //合并后输出1
+
+        //以索引3为指定位置分割为两个文本节点
+        box.firstChild.splitText(3); 
+        console.log(box.childNodes[0].nodeValue); //输出Mr.
+
+
 
         /*
          * Attr属性节点类型
@@ -117,8 +133,7 @@
         }; 
     }
 </script>
-<div name="divName" id="box" title="标题" class="pox" style="color:red;">测试Div<em>倾斜</em>结尾</div>
-<input type='text' name="inputName" value="test" />
+<div name="divName" id="box"></div>
 </body>
 </html>
 
