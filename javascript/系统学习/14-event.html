@@ -67,6 +67,78 @@
         var input = document.getElementsByTagName('input')[0]; 
 
         /*
+         * W3C的onmouseover和onmouseout
+         */
+        //得到移入uname最近那个DOM对象
+        uname.onmouseover=function(evt){
+            //console.log(evt.relatedTarget);
+            //window.event.fromElement //IE使用该方式与以上效果相同
+            //兼容IE和W3C模式
+            console.log(getTarget(evt)); 
+        }; 
+        //得到从uname移出最近那个DOM对象
+        uname.onmouseout=function(evt){
+            //console.log(evt.relatedTarget);
+            //window.event.toElement //IE使用该方式与以上效果相同
+            //兼容IE和W3C模式
+            console.log(getTarget(evt)); 
+        }; 
+        //阻止默认行为
+        var a=document.getElementById('toBaidu'); 
+        a.onclick=function(evt){
+            //阻止事件冒泡
+            setStop(evt); 
+
+            //W3C 当点击a标签时，阻止跳转的href=www.baidu.com
+            //evt.preventDefault(); 
+            //兼容IE和W3C
+            preDef(evt); 
+            alert(12); 
+        }
+        /*
+         * 上下文菜单事件contextmenu
+         * 当我们右击网页的时候会出现windows自带的菜单
+         * 可以使用contextmenu事件来修改我们指定的菜单, 前提是把右键的默认行为取消
+         * 以下是右击textarea文本框出现自定义的菜单id=menu
+         */
+        var text = document.getElementById('area'); 
+        text.oncontextmenu = function(event){
+            var e = event || window.event; 
+            //阻止默认行为(window自带的右键菜单)
+            preDef(event); 
+            //防止事件冒泡
+            setStop(event)
+            var menu = document.getElementById('menu'); 
+            menu.style.left = e.clientX+'px'; 
+            menu.style.top = e.clientY+'px'; 
+            menu.style.display = 'block'; 
+        }
+
+        /*
+         * 卸载前事件：beforeunload
+         * 在即将离开当前页面(刷新或关闭)时执行 JavaScrip
+         */
+        window.onbeforeunload= function(evt){
+            //preDef(evt); 
+            //document.URL = 'http://www.baidu.com'; 
+            return "确定要离开吗?"; 
+        }
+
+        /*
+         * 鼠标滚轮事件
+         * 分为火狐和非火狐
+         */
+        //非火狐
+        document.onmousewheel = function(evt){
+            var e = evt || window.event; 
+            alert(e.wheelDelta); 
+        }
+        //火狐
+        document.onDOMMouseScroll = function(evt){
+            alert(-evt.detail*30); 
+        }
+
+        /*
          * 鼠标事件
          */
         //注意：如果box改为box(), 就会在onload中自动执行
@@ -74,6 +146,7 @@
         //box函数可以放在onload之外，也可以和input同级
         function box(event)
         {
+            document.getElementById('menu').style.display='none'; 
             //this代表input元素对象
             console.log(this.value);//输出：按钮 
             //输出1, box函数参数个数, 即对象事件
@@ -227,12 +300,87 @@
             return e.keyCode;
         }
     }
+    //兼容onmouseout, onmouseover事件对象
+    function getTarget(event)
+    {
+        var e = event || window.event; 
+        if(e.srcElement) //IE
+        {
+            if(e.type == 'mouseover')
+            {
+                return e.fromElement; 
+            }else(e.type == 'mouseout')
+            {
+                return e.toElement;
+            }
+        }else if(e.relatedTarget) //W3C
+        {
+            return e.relatedTarget; 
+        }
+    }
+    //兼容阻止默认行为
+    function preDef(event)
+    {
+        var e = event || window.event; 
+        if(e.preventDefault) //W3C
+        {
+            e.preventDefault(); 
+        }else{ //IE
+            e.returnValue=false; 
+        }
+    }
 </script>
 <input type="button" value="按钮" />
-<input type="text" value="hello" id="uname" />
+<div style="width=150px; height:150px; background:orange;">
+    <input type="text" value="hello" id="uname" />
+</div>
+<br>
+
+<a href="http://www.baidu.com" id="toBaidu">百度</a>
+<br>
+<br>
+<br>
+
 <div id="testDiv" style="width:100px; height:100px; background:red; ">
     测试DIV
     <input type="button" id="submit" value="提交" />
 </div>
+
+
+<br><br>
+<textarea id="area" rows="3" cols="20">
+    测试右键菜单
+</textarea></textarea>
+
+<ul style="width:50px; height:78px; position:absolute; background:red; display:none;" id="menu">
+    <li>菜单1</li>
+    <li>菜单2</li>
+    <li>菜单3</li>
+</ul
+
+<br>
+<a href="http://www.ljlj.cc">蓝景商城</a>
+
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+<p>111</p>
+
 </body>
 </html>
