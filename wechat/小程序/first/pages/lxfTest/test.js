@@ -64,12 +64,12 @@ Page({
         console.log(this.data.objectArray);
     },
     outerTap:function(){
-        console.log('outer Tap');
+        console.log('事件触发了outer Tap');
     },
     innerTap:function(){
-        console.log('inner Tap');
+        console.log('事件触发了inner Tap');
     },
     middleTap:function(){
-        console.log('middle Tap');
+        console.log('事件触发了middle Tap');
     }
 })

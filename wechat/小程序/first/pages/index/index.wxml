@@ -7,6 +7,5 @@
   <view class="usermotto">
     <text class="user-motto">内容：{{motto}}</text>
     <button bindtap="changeContent">按钮</button>
-
   </view>
 </view>

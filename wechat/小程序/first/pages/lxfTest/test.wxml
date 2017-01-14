@@ -1,19 +1,20 @@
-<view>Content</view>
+<!--<view>Content</view>
 <view>{{name}}</view>
 <view>密码是：{{pass}}</view>
 <button bindtap="toIndex">跳转到首页</button>
 <navigator hover-class="active" url="../navi/navi">使用组件跳转到首页</navigator>
-<!-- 使用外部common.js中的方法sayHello -->
+-->
+<!-- 使用外部common.js中的方法sayHello
 <button bindtap="say">sayHello</button>
-
-<!-- 条件渲染 -->
+ -->
+<!-- 条件渲染 
 <button bindtap="show">是否显示</button>
 <view wx:if="{{bol}}">隐藏信息</view>
 
 <view wx:if="{{chengji<60}}">不及格</view>
 <view wx:elif="{{chengji>=60 && chengji<80}}">及格</view>
 <view wx:elif="{{chengji>=80 && chengji<=100}}">优秀</view>
-
+-->
 <!--使用block将多个组件包装起来，block也可以自定义 
 <block wx:if="{{true}}">
     <view>第一个view</view>
@@ -69,21 +70,24 @@
 <button bindtap="switch">Switch</button>-->
 
 <!--冒泡事件, 用户点击innerTap事件会向父级传递，导致父元素也出发bindtap事件-->
-<!--非冒泡事件, 用户点击innerTap事件不会向父级传递-->
+<!--非冒泡事件, 用户点击innerTap事件不会向父级传递
 <view id="outer" bindtap="outerTap" style="border:1px solid red; padding:5px;">
     outer 
-    <view id="middle" bindtap="middleTap"  style="border:1px solid green;padding:5px;">
+    <view id="middle" catchtap="middleTap"  style="border:1px solid green;padding:5px;">
         middle 
-        <view id="middle" catchtap="innerTap" style="border:1px solid black;padding:5px;">
+        <view id="middle" bindtap="innerTap" style="border:1px solid black;padding:5px;">
             inner view
         </view>
     </view>
 <view>
+-->
 
 <!-- 引用 import 只包含目标文件模板信息
 <import src="item.wxml" />
-<template is="iteml" data="{{name:'wangwu'}}" />-->
-
-<!-- 引用 include 只包含目标文件非模板信息-->
+<template is="iteml" data="{{name:'wangwu'}}" />
+-->
+<!-- 引用 include 只包含目标文件非模板信息
 <include src="item.wxml" />
 <template is="iteml" data="{{name:'wangwu'}}" />
+-->
+<view class="rpx"></view>
