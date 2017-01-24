@@ -36,28 +36,57 @@ if($_GET["echostr"])
     }
     if(!empty($userMsgObj->Content))
     {
-        $session->responseMsg('helloworld-new');
+       $param = '<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=o9Te2vxxbeP481iv76ujkJMNr3XA&redirect_uri=http://www.ljlj.cc/wechat/lxf/oauth2.php&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect">点击体验oAuth2.0网页授权</a>';
+        $session->responseMsg($param);
+        //返回当前会话数据
+        //$session->responseMsg('helloworld-new');
+        //调用客服接口异步传输数据给wechat
+        /*
+        include_once "WechatServerApi.php";
+        $wechat = new WechatServerApi();
+        $param = '{
+                "touser":"'.$userMsgObj->FromUserName.'",
+                        "msgtype":"text",
+                            "text":
+                            {
+                                 "content":"我是客服接口发来的数据"
+                            }
+                }';
+        $wechat->serviceSend($param);
+         */
     }
 }
 
 //记录错误日志
-function addLog($msg='')
+function addLog($msg='',$fileName='errorLog.txt')
 {
-    $myfile = fopen("errorLog.txt", "w") or die("Unable to open file!");
-    chmod("errorLog.txt", 0777);
+    $path = './logs';
+    if(!is_dir($path))  
+    {  
+        mkdir($path,0755);  
+    } 
+    //以追加的形式写入文件数据
+    file_put_contents($path.'/'.$fileName,$msg."\n",FILE_APPEND);
+    /*
+    $myfile = fopen($path.'/'.$fileName, "w") or die("Unable to open file!");
+    chmod($path.'/'.$fileName, 0777);
     fwrite($myfile, $msg);
     fclose($myfile);
+    */
 }
 //接收微信传递过来的用户信息
 function xmlToObj()
 {
     $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];//用来接收PHP不识别的POST数据 比如text/xml,soap
+
     if(empty($postStr))
     {
         echo "";//返回空串　微信服务器不作任何处理　也不重试请求
         exit;
     }
     $postObj      = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+    //将收到的信息记录日志
+    addLog($postStr."\n<!----- 我是消息分割线 -->",'from_wechat_'.$postObj->ToUserName.'.xml');
     //$postObj->Content = str_replace(" ", "",$postObj->Content);
     return $postObj;
 }

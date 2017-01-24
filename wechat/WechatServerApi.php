@@ -25,7 +25,7 @@ class WechatServerApi
         //获取access_token值的接口
         $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appid."&secret=".$this->appsecret;
         include_once "RedisClient.php";
-        $config = array('port'=>6379,'host'=>'127.0.0.1','auth'=>'123456');
+        $config = array('port'=>6379,'host'=>'192.168.0.6','auth'=>'redis-179');
         $redis = new RedisClient($config);
 
         $tokens   = $redis->hGetAll("wechat_token_lxf");//获取token值
@@ -107,4 +107,34 @@ class WechatServerApi
         copy($url, $path."/". $id .".jpg");//拷贝远程图像到本地
         return $path."/". $id .".jpg";//返回本地原图的路径
     }
+    /**                                                                                                                          
+     * 新增临时素材封装函数(多媒体文件上传)                                                                                      
+     *@param   $fileName  String    -  文件绝对路径                                                                              
+     *         $type      String    -  文件类型                                                                                  
+     *@return  Array  {                                                                                               
+     *              "type":      //媒体文件类型分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb，主要用于视频与音乐格式
+     *                      的缩略图）
+     *              "media_id":  //媒体文件上传后，获取时的唯一标识                                               
+     *              "created_at"://媒体文件上传时间戳                                                             
+     *                   }                                                                                                        
+     **/                                                                                                                          
+    function postFile($fileName,$type = "image")                                                                                 
+    {                                                                                                                            
+        $url = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=".$this->access_token."&type=".$type;                
+        $fields['media'] = '@'.$fileName;                                                                                        
+        $res = $this->https_request($url,$fields);                                                                               
+        return json_decode($res, TRUE);                                                                                          
+    }
+
+    /**
+     * * 调用客服接口,给用户发送信息
+     */
+    function serviceSend($data)
+    {
+        $url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$this->access_token;
+        $res = $this->https_request($url,$data);
+        return json_decode($res, TRUE);
+
+    }
+
 }
