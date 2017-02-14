@@ -7,3 +7,5 @@
 * javaFilter - java过滤器基础练习（基础，过滤器链，过滤器的request,forward,include分类)
 * Servlet3Filter - servlet3.0有了过滤器异步类型，这里重点练习servlet3.0异步线程
 * LoginsFilter - 过滤器最后项目练习，主要包含过滤器对于用户登录验证和在过滤器中统一字符编码设置,以及过期web.xml中的初始化参数
+* firstListener - web监听器基础练习（分为：ServletContext/HttpSession/ServletRequest）等
+* ListenerSessionDemo - 使用HttpSession和ServletRequest监听器实现在线人数信息的统计

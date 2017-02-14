@@ -34,4 +34,7 @@ public class Telphone {
 		System.out.println("我是手机，我的配置是:");
 		System.out.println("屏幕大小："+screen+" CPU:"+cpu+"内存:"+mem);
 	}
+	
+	
+	
 }
