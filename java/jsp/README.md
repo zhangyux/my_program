@@ -9,3 +9,4 @@
 * LoginsFilter - 过滤器最后项目练习，主要包含过滤器对于用户登录验证和在过滤器中统一字符编码设置,以及过期web.xml中的初始化参数
 * firstListener - web监听器基础练习（分为：ServletContext/HttpSession/ServletRequest）等
 * ListenerSessionDemo - 使用HttpSession和ServletRequest监听器实现在线人数信息的统计
+* jspServletTable - 使用jsp接合servlet读取数据库数据，显示到jsp页面中
