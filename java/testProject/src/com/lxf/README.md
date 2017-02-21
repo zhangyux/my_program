@@ -7,4 +7,4 @@
 * exception - java异常机制练习
 * second - java多态demo练习
 * third - java继承抽象的练习
-* nnotationDao - java注解Demo( 使用java反射机制以及注解获取实体类属性和值，并拼接sql语句 )
+* annotationDao - java注解Demo( 使用java反射机制以及注解获取实体类属性和值，并拼接sql语句 )
