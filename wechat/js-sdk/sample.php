@@ -16,14 +16,6 @@ $cardSign = $jssdk->getSignPackage(2,$cardArr);
 $timestamp = $cardSign["timestamp"];
 $signature = $cardSign["signature"];
 $nonceStr = $cardSign["nonceStr"];
-
-$cardId2 = 'pNKvmjmJI3j0z2ob9VyA2A_cSTv8';
-$cardArr['cardId'] = $cardId2;
-//微信卡券签名
-$cardSign2 = $jssdk->getSignPackage(2,$cardArr);
-$timestamp2 = $cardSign2["timestamp"];
-$signature2 = $cardSign2["signature"];
-$nonceStr2 = $cardSign2["nonceStr"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +34,6 @@ $nonceStr2 = $cardSign2["nonceStr"];
     <button id="shareQQ">分享到QQ</button>
     <button id="shareWeiBo">分享到微博</button>
     <button id="addCard">添加卡券到卡包</button>
-    <button id="addCard2">添加卡券到卡包2</button>
     
 </body>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -85,30 +76,6 @@ $nonceStr2 = $cardSign2["nonceStr"];
                   {
 			cardId: '<?php echo $cardId ?>',
                   	cardExt: '{"code":"<?php echo $code;?>","timestamp":"<?php  echo $timestamp;?>","signature":"<?php echo $signature;?>","nonce_str":"<?php echo $nonceStr;?>"}'
-		  }
-              ],
-              success: function (res) {
-                          alert('已添加卡券：' + JSON.stringify(res.cardList));
-              },
-/*
-              cancel: function (res) {
-                          alert("用户点击取消:"+JSON.stringify(res))
-              },
-              fail: function(res){
-                  alert("调用失败"+JSON.stringify(res))
-              }
-*/
-          });
-      }
-	//添加卡券到卡包2
-      document.getElementById("addCard2").onclick = function()
-      {
-	 alert("添加卡券2");
-          wx.addCard({
-              cardList:[
-                  {
-			cardId: '<?php echo $cardId2 ?>',
-                  	cardExt: '{"code":"<?php echo $code;?>","timestamp":"<?php  echo $timestamp2;?>","signature":"<?php echo $signature2;?>","nonce_str":"<?php echo $nonceStr2;?>"}'
 		  }
               ],
               success: function (res) {
