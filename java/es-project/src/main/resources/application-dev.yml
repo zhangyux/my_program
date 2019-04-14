@@ -1,0 +1,11 @@
+#jpa config
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/xunwu
+    username: common
+    password: common
+
+#thymeleaf模板配置
+  thymeleaf:
+    cache: false

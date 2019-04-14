@@ -1,0 +1,42 @@
+#jpa config
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    jdbc-url: jdbc:mysql://127.0.0.1:3306/xunwu
+    username: common
+    password: common
+#thymeleaf 模式使用html
+  thymeleaf:
+    mode: HTML
+
+  jpa:
+    #打印sql
+    show-sql: true
+    hibernate:
+      #hibernate启动的时候支对sql做格式验证
+      ddl-auto: validate
+
+#session会话存储方式类型
+  session:
+    store-type: hash_map
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+
+##内置tomcat配置
+server:
+  port: 8090
+#禁用spring boot 的异常页面 <<Whitelabel Error Page>>
+  error:
+    whitelabel:
+      enabled: true
+
+#关闭http基本验证
+security:
+  basic:
+    enabled: false
