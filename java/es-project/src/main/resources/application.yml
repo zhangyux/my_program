@@ -10,6 +10,14 @@ spring:
 #thymeleaf 模式使用html
   thymeleaf:
     mode: HTML
+#静态资源访问路径配置
+  resources:
+    static-locations: classpath:/
+
+#静态资源不需要热加载
+#  devtools:
+#    restart:
+#      additional-exclude: templates/**,static/**
 
   jpa:
     #打印sql
@@ -36,7 +44,10 @@ server:
     whitelabel:
       enabled: true
 
+
 #关闭http基本验证
 security:
   basic:
     enabled: false
+
+
