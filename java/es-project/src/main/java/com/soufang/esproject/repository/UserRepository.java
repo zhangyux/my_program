@@ -5,13 +5,14 @@ import org.springframework.data.repository.CrudRepository;
 
 
 /**
- * Created by 瓦力.
+ *
+ * 用户数据DAO.
  */
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    /*
-    User findByName(String userName);
 
+    User findByName(String userName);
+/*
     User findUserByPhoneNumber(String telephone);
 
     @Modifying
