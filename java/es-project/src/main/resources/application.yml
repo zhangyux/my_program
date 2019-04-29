@@ -50,4 +50,10 @@ security:
   basic:
     enabled: false
 
+#qiniu
+qiniu:
+  AccessKey: uHJBmWL1EU9bFaQBkQWrGRMZJFNxDTEetvRfQaDR
+  SecretKey: C9enDqhNa47X00W92PrBfGgRSruz0_wOeqpp6-CU
+  Bucket:  liangxifeng-2
+  cdn.prefix: http://pqpr6rk2f.bkt.clouddn.com
 

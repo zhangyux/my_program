@@ -9,3 +9,11 @@ spring:
 #thymeleaf模板配置
   thymeleaf:
     cache: false
+
+#图片上传配置
+  http:
+    multipart:
+      enabled: true
+      location: /home/lxf/git/user_liangxifeng833/my_program/java/es-project/tmp
+      max-file-size: 5MB
+      max-request-size: 20MB
