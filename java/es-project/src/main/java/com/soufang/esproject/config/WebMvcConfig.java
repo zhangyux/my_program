@@ -1,5 +1,6 @@
 package com.soufang.esproject.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -90,9 +91,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements Application
      * Bean Util
      * @return
      */
-    /*
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
-    }*/
+    }
 }

@@ -1,10 +1,10 @@
 package com.soufang.esproject.web.controller;
 
 import com.soufang.esproject.base.ApiResponse;
+import com.soufang.esproject.entity.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by 瓦力.
@@ -24,10 +24,31 @@ public class HomeController {
     @ResponseBody
     public ApiResponse get()
     {
+        System.out.println("I am get request.....");
         //return new ApiResponse(11,"dafdsa",null);
         return ApiResponse.ofMessage(2,"数据库未查询到任何记录");
         //return ApiResponse.ofStatus(ApiResponse.Status.BAD_REQUEST);
         //return ApiResponse.ofMessage(101010,"hahahah");
+    }
+    @PostMapping("post")
+    @ResponseBody
+    public ApiResponse post(@RequestParam(name = "id") int id, @RequestParam(name = "name") String name)
+    {
+        System.out.println("I am post request.....");
+        System.out.println("id = " +id);
+        System.out.println("name = " +name);
+        return ApiResponse.ofMessage(100,"hello world!");
+    }
+    @PutMapping("put")
+    @ResponseBody
+    public ApiResponse put(@RequestBody  Role role)
+    {
+        for(int i=0; i<10000000; i++){
+            System.out.println(i);
+        }
+        System.out.println("I am post request.....");
+        System.out.println("role  = " +role);
+        return ApiResponse.ofMessage(100,"hello world!");
     }
 
     /*

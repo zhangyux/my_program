@@ -96,6 +96,7 @@ public class AdminController {
             //将文件传输到远程七牛云
             Response response = iQiNiuService.uploadFile(fileInputStream);
             if( response.isOK() ){
+                //解析上传后的结果为QiNiuPutRet类格式
                 QiNiuPutRet qiNiuPutRet = gson.fromJson(response.bodyString(), QiNiuPutRet.class);
                 return ApiResponse.ofSuccess(qiNiuPutRet);
             }else{
