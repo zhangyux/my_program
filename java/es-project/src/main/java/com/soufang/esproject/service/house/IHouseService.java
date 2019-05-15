@@ -2,9 +2,10 @@ package com.soufang.esproject.service.house;
 
 import java.util.Date;
 
-import com.soufang.esproject.entity.House;
+import com.soufang.esproject.service.ServiceMultiResult;
 import com.soufang.esproject.service.ServiceResult;
 import com.soufang.esproject.web.dto.HouseDTO;
+import com.soufang.esproject.web.form.DatatableSearch;
 import com.soufang.esproject.web.form.HouseForm;
 import org.springframework.data.util.Pair;
 
@@ -14,4 +15,5 @@ import org.springframework.data.util.Pair;
  */
 public interface IHouseService {
     ServiceResult<HouseDTO> save(HouseForm houseForm);
+    ServiceMultiResult<HouseDTO> adminQuery(DatatableSearch searchBody);
 }

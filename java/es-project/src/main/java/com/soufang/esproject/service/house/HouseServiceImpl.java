@@ -2,17 +2,24 @@ package com.soufang.esproject.service.house;
 
 import com.soufang.esproject.entity.*;
 import com.soufang.esproject.repository.*;
+import com.soufang.esproject.service.ServiceMultiResult;
 import com.soufang.esproject.service.ServiceResult;
 import com.soufang.esproject.web.dto.HouseDTO;
 import com.soufang.esproject.web.dto.HouseDetailDTO;
 import com.soufang.esproject.web.dto.HousePictureDTO;
+import com.soufang.esproject.web.form.DatatableSearch;
 import com.soufang.esproject.web.form.HouseForm;
 import com.soufang.esproject.web.form.PhotoForm;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.net.ssl.HostnameVerifier;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,6 +84,25 @@ public class HouseServiceImpl implements IHouseService {
 //        }
         return new ServiceResult<HouseDTO>(true,null,houseDTO);
     }
+
+    @Override
+    public ServiceMultiResult<HouseDTO> adminQuery(DatatableSearch searchBody) {
+        List<HouseDTO> houseDTOS = new ArrayList<>();
+
+        Sort sort = new Sort(Sort.Direction.fromString(searchBody.getDirection()), searchBody.getOrderBy());
+        int page = searchBody.getStart() / searchBody.getLength();
+        Pageable pageable = new PageRequest(page, searchBody.getLength(), sort);
+        Page<House> houses = houseReposity.findAll(pageable);
+
+        //Iterable<House> houses = houseReposity.findAll();
+        houses.forEach(house -> {
+            HouseDTO houseDTO = modelMapper.map(house,HouseDTO.class);
+            houseDTO.setCover(this.cdnPrefix + house.getCover());
+            houseDTOS.add(houseDTO);
+        });
+        return new ServiceMultiResult<>(houses.getTotalElements(),houseDTOS);
+    }
+
     private List<HousePicture> gengeratePicture(HouseForm houseForm, Long houseId){
         List<HousePicture> pictures = new ArrayList<>();
         if(houseForm.getPhotos() == null || houseForm.getPhotos().isEmpty()) {

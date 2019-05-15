@@ -3,8 +3,10 @@ package com.soufang.esproject.web.controller.admin;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
+import com.soufang.esproject.base.ApiDataTableResponse;
 import com.soufang.esproject.base.ApiResponse;
 import com.soufang.esproject.entity.SupportAddress;
+import com.soufang.esproject.service.ServiceMultiResult;
 import com.soufang.esproject.service.ServiceResult;
 import com.soufang.esproject.service.house.IAddressService;
 import com.soufang.esproject.service.house.IHouseService;
@@ -12,6 +14,7 @@ import com.soufang.esproject.service.house.IQiNiuService;
 import com.soufang.esproject.web.dto.HouseDTO;
 import com.soufang.esproject.web.dto.QiNiuPutRet;
 import com.soufang.esproject.web.dto.SupportAddressDTO;
+import com.soufang.esproject.web.form.DatatableSearch;
 import com.soufang.esproject.web.form.HouseForm;
 import com.sun.tracing.dtrace.ModuleAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +64,19 @@ public class AdminController {
         return "admin/login";
     }
 
+    /**
+     * 新增房源
+     * @return
+     */
     @GetMapping("/admin/add/house")
     public String addHousePage(){
         return "admin/house-add";
     }
 
+    /**
+     * 房源列表
+     * @return
+     */
     @GetMapping("/admin/house/list")
     public String houseListPage(){
         return "admin/house-list";
@@ -129,7 +140,12 @@ public class AdminController {
         }
     }
 
-
+    /**
+     * 新增房源action
+     * @param houseForm
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("admin/add/house")
     @ResponseBody
     public ApiResponse addHouse(@Valid @ModelAttribute("form-house-add") HouseForm houseForm, BindingResult bindingResult){
@@ -148,5 +164,19 @@ public class AdminController {
             return ApiResponse.ofSuccess(result.getResult());
         }
         return ApiResponse.ofStatus(ApiResponse.Status.NOT_VALID_PARAM);
+    }
+    /**
+     * 房源列表api
+     */
+    @PostMapping("admin/houses")
+    @ResponseBody
+    public ApiDataTableResponse houses(@ModelAttribute DatatableSearch searchBody) {
+        ServiceMultiResult<HouseDTO> result = houseService.adminQuery(searchBody);
+        ApiDataTableResponse response = new ApiDataTableResponse(ApiResponse.Status.SUCCESS);
+        response.setData(result.getResult());
+        response.setRecordsFiltered(result.getTotal());
+        response.setRecordsTotal(result.getTotal());
+        response.setDraw(searchBody.getDraw());
+        return response;
     }
 }

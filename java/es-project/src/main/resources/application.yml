@@ -7,6 +7,14 @@ spring:
     jdbc-url: jdbc:mysql://127.0.0.1:3306/xunwu
     username: common
     password: common
+#redis配置
+#  redis:
+#    database: 0
+#    host: localhost
+#    port: 8679
+#    pool:
+#      min-idle: 1
+#    timeout: 3000
 #thymeleaf 模式使用html
   thymeleaf:
     mode: HTML
