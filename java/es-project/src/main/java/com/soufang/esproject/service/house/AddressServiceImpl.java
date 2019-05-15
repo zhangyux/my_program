@@ -8,9 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.soufang.esproject.entity.Subway;
+import com.soufang.esproject.entity.SubwayStation;
 import com.soufang.esproject.entity.SupportAddress;
+import com.soufang.esproject.repository.SubwayRepository;
+import com.soufang.esproject.repository.SubwayStationRepository;
 import com.soufang.esproject.repository.SupportAddressRepository;
 import com.soufang.esproject.service.ServiceMultiResult;
+import com.soufang.esproject.web.dto.SubwayDTO;
+import com.soufang.esproject.web.dto.SubwayStationDTO;
 import com.soufang.esproject.web.dto.SupportAddressDTO;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -27,13 +33,13 @@ public class AddressServiceImpl implements IAddressService {
     private SupportAddressRepository supportAddressRepository;
     //@Autowired
     private ModelMapper modelMapper = new ModelMapper();
-    /*
+
     @Autowired
     private SubwayRepository subwayRepository;
 
     @Autowired
     private SubwayStationRepository subwayStationRepository;
-
+    /*
     @Autowired
     private ModelMapper modelMapper;
 
@@ -44,6 +50,8 @@ public class AddressServiceImpl implements IAddressService {
 
     private static final String BAIDU_MAP_GEOCONV_API = "http://api.map.baidu.com/geocoder/v2/?";
     */
+
+
     /**
      * POI数据管理接口
 
@@ -68,7 +76,7 @@ public class AddressServiceImpl implements IAddressService {
         }
         return new ServiceMultiResult<>(addressDTOS.size(),addressDTOS);
     }
-    /*
+
     @Override
     public Map<SupportAddress.Level, SupportAddressDTO> findCityAndRegion(String cityEnName, String regionEnName) {
         Map<SupportAddress.Level, SupportAddressDTO> result = new HashMap<>();
@@ -121,7 +129,7 @@ public class AddressServiceImpl implements IAddressService {
         stations.forEach(station -> result.add(modelMapper.map(station, SubwayStationDTO.class)));
         return result;
     }
-
+    /**
     @Override
     public ServiceResult<SubwayDTO> findSubway(Long subwayId) {
         if (subwayId == null) {
