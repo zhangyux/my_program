@@ -170,7 +170,8 @@ $(function () {
             return;
         }
         var str = '';
-        $.each(data.data, function (i, item) {
+        $.each(data.data.result, function (i, item) {
+            //console.log("item"+i+"="+item)
             str += "<option value=" + item.en_name + ">" + item.cn_name + "</option>";
         });
         $city.append(str);

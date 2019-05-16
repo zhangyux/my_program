@@ -15,7 +15,7 @@ public class HomeController {
     @Autowired
     private ISmsService smsService;*/
 
-    @GetMapping("/")
+    @GetMapping(value = {"/","/index"})
     public String index(Model model){
         model.addAttribute("name","你好我是从controller赋值过来的,ok");
         return "index";

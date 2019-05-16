@@ -2,6 +2,7 @@ package com.soufang.esproject.service.house;
 
 import com.soufang.esproject.entity.SupportAddress;
 import com.soufang.esproject.service.ServiceMultiResult;
+import com.soufang.esproject.service.ServiceResult;
 import com.soufang.esproject.web.dto.SubwayDTO;
 import com.soufang.esproject.web.dto.SubwayStationDTO;
 import com.soufang.esproject.web.dto.SupportAddressDTO;
@@ -45,6 +46,24 @@ public interface IAddressService {
      * @return
      */
     List<SubwayStationDTO> findAllStationBySubway(Long subwayId);
+    /**
+     * 获取地铁线信息
+     * @param subwayId
+     * @return
+     */
+    ServiceResult<SubwayDTO> findSubway(Long subwayId);
+    /**
+     * 获取地铁站点信息
+     * @param stationId
+     * @return
+     */
+    ServiceResult<SubwayStationDTO> findSubwayStation(Long stationId);
+    /**
+     * 根据城市英文简写获取城市详细信息
+     * @param cityEnName
+     * @return
+     */
+    ServiceResult<SupportAddressDTO> findCity(String cityEnName);
 
 }
 

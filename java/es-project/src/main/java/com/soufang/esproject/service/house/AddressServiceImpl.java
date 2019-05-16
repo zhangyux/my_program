@@ -15,6 +15,7 @@ import com.soufang.esproject.repository.SubwayRepository;
 import com.soufang.esproject.repository.SubwayStationRepository;
 import com.soufang.esproject.repository.SupportAddressRepository;
 import com.soufang.esproject.service.ServiceMultiResult;
+import com.soufang.esproject.service.ServiceResult;
 import com.soufang.esproject.web.dto.SubwayDTO;
 import com.soufang.esproject.web.dto.SubwayStationDTO;
 import com.soufang.esproject.web.dto.SupportAddressDTO;
@@ -129,7 +130,7 @@ public class AddressServiceImpl implements IAddressService {
         stations.forEach(station -> result.add(modelMapper.map(station, SubwayStationDTO.class)));
         return result;
     }
-    /**
+
     @Override
     public ServiceResult<SubwayDTO> findSubway(Long subwayId) {
         if (subwayId == null) {
@@ -168,7 +169,7 @@ public class AddressServiceImpl implements IAddressService {
         SupportAddressDTO addressDTO = modelMapper.map(supportAddress, SupportAddressDTO.class);
         return ServiceResult.of(addressDTO);
     }
-
+/**
     @Override
     public ServiceResult<BaiduMapLocation> getBaiduMapLocation(String city, String address) {
         String encodeAddress;
