@@ -5,6 +5,9 @@ import com.soufang.esproject.entity.User;
 import com.soufang.esproject.repository.RoleReposity;
 import com.soufang.esproject.repository.UserRepository;
 import com.soufang.esproject.service.IUserServcie;
+import com.soufang.esproject.service.ServiceResult;
+import com.soufang.esproject.web.dto.UserDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +27,7 @@ public class UserServiceImpl implements IUserServcie {
     private UserRepository userRepository;
     @Autowired
     private RoleReposity roleReposity;
+    private ModelMapper modelMapper = new ModelMapper();
 
     @Override
     public User findUserByName(String userName) {
@@ -41,5 +45,30 @@ public class UserServiceImpl implements IUserServcie {
         roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getName())));
         user.setAuthorityList(authorities);
         return user;
+    }
+
+    @Override
+    public ServiceResult<UserDTO> findById(Long userId) {
+        User user = userRepository.findOne(userId);
+        if (user == null) {
+            return ServiceResult.notFound();
+        }
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        return ServiceResult.of(userDTO);
+    }
+
+    @Override
+    public User findUserByTelephone(String telephone) {
+        return null;
+    }
+
+    @Override
+    public User addUserByPhone(String telehone) {
+        return null;
+    }
+
+    @Override
+    public ServiceResult modifyUserProfile(String profile, String value) {
+        return null;
     }
 }

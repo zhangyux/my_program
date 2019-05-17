@@ -13,4 +13,6 @@ public interface HouseDetailResposity extends CrudRepository<HouseDetail,Long> {
     HouseDetail findAllByHouseId(Long id);
 
     HouseDetail findByHouseId(Long id);
+
+    List<HouseDetail> findAllByHouseIdIn(List<Long> houseIds);
 }
